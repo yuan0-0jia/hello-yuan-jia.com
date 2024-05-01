@@ -9,8 +9,8 @@ function About() {
 
   return (
     <>
-      <div className="m-20 p-4 flex flex-col justify-center items-center tracking-wide">
-        <div className="flex flex-col items-center justify-center max-w-7xl">
+      <div className="m-20 flex flex-col items-center justify-center p-4 tracking-wide">
+        <div className="flex max-w-7xl flex-col items-center justify-center">
           <Header
             title={"About Me"}
             sub={"Yuan Jia"}
@@ -20,7 +20,7 @@ function About() {
 
           {isLoading ? (
             <div className="my-40">
-              <Spinner className="fill-zinc-600 w-48 h-48" />
+              <Spinner className="h-48 w-48 fill-zinc-600" />
             </div>
           ) : (
             <>
@@ -38,14 +38,12 @@ function About() {
                 ))}
 
               <Paragraph>
-                When I&apos;m not writing code, I enjoy exploring Santa Cruz
-                through my camera lens. I love taking photos of the natural
-                beauty that surrounds us. You can often find me wandering around
-                Santa Cruz with my camera, capturing moments that catch my eyes.
-                There are also some photos of Santa Cruz that I took on the{" "}
+                When I&apos;m not writing code, I love exploring Santa Cruz with
+                my camera. You can spot me wandering around, capturing moments
+                that catch my eye. Check out some of my photos on the{" "}
                 <Link
                   to="/photos"
-                  className="underline decoration-1 decoration-dotted underline-offset-4"
+                  className="underline decoration-dotted decoration-1 underline-offset-4"
                 >
                   Photos
                 </Link>{" "}
