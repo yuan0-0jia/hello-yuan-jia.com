@@ -8,8 +8,8 @@ function Photo() {
   const { photos, isLoading } = usePhotos();
 
   return (
-    <div className="m-20 p-4 flex flex-col justify-center items-center tracking-wide">
-      <div className="flex flex-col items-center justify-center max-w-7xl">
+    <div className="m-20 flex flex-col items-center justify-center p-4 tracking-wide">
+      <div className="flex max-w-7xl flex-col items-center justify-center">
         <Header
           title={"Photos"}
           sub={"over the years"}
@@ -19,17 +19,17 @@ function Photo() {
 
         {isLoading ? (
           <div className="my-40">
-            <Spinner className="fill-zinc-600 w-48 h-48" />
+            <Spinner className="h-48 w-48 fill-zinc-600" />
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-3 my-8 gap-8">
+            <div className="my-8 grid grid-cols-3 gap-8">
               {photos
                 .filter((photo) => photo.id !== 0)
                 .map((photo) => (
                   <img
                     src={photo.image}
-                    className="rounded-xl"
+                    className="aspect-[3/2] rounded-xl object-cover"
                     key={photo.id}
                   />
                 ))}
@@ -39,7 +39,7 @@ function Photo() {
               Feel free to check out more photos on my{" "}
               <Link
                 to="https://www.flickr.com/photos/yuan-jia/"
-                className="underline decoration-1 decoration-dotted underline-offset-4"
+                className="underline decoration-dotted decoration-1 underline-offset-4"
               >
                 flickr.
               </Link>{" "}
