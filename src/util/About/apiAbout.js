@@ -15,7 +15,7 @@ export async function createEditAbout(newParagraph, id) {
   const hasImagePath = newParagraph.photo?.startsWith?.(SUPABASE_URL);
   const imageName = `${Math.random()}-${newParagraph.photo?.name}`.replaceAll(
     "/",
-    ""
+    "",
   );
 
   const imagePath = hasImagePath
@@ -24,7 +24,7 @@ export async function createEditAbout(newParagraph, id) {
 
   let query = supabase.from("about");
 
-  if (!id) {
+  if (id === null) {
     if (!newParagraph.photo?.name) {
       query = query.insert([{ ...newParagraph }]);
     } else {
@@ -32,7 +32,7 @@ export async function createEditAbout(newParagraph, id) {
     }
   }
 
-  if (id) {
+  if (id !== null) {
     if (!newParagraph.photo?.name) {
       query = query
         .update({ ...newParagraph })

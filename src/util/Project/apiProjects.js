@@ -15,7 +15,7 @@ export async function createEditProject(newProject, id) {
   const hasImagePath = newProject.thumbnail?.startsWith?.(SUPABASE_URL);
   const imageName = `${Math.random()}-${newProject.thumbnail.name}`.replaceAll(
     "/",
-    ""
+    "",
   );
 
   const imagePath = hasImagePath
@@ -24,9 +24,10 @@ export async function createEditProject(newProject, id) {
 
   let query = supabase.from("projects");
 
-  if (!id) query = query.insert([{ ...newProject, thumbnail: imagePath }]);
+  if (id === null)
+    query = query.insert([{ ...newProject, thumbnail: imagePath }]);
 
-  if (id) {
+  if (id !== null) {
     query = query
       .update({ ...newProject, thumbnail: imagePath })
       .eq("id", id)
@@ -49,7 +50,7 @@ export async function createEditProject(newProject, id) {
     await supabase.from("projects").delete().eq("id", data.id);
     console.error(storageError);
     throw new Error(
-      "Project thumbnail could not be uploaded, Project was not created"
+      "Project thumbnail could not be uploaded, Project was not created",
     );
   }
 

@@ -15,7 +15,7 @@ export async function createEditPhoto(newPhoto, id) {
   const hasImagePath = newPhoto.image?.startsWith?.(SUPABASE_URL);
   const imageName = `${Math.random()}-${newPhoto.image.name}`.replaceAll(
     "/",
-    ""
+    "",
   );
 
   const imagePath = hasImagePath
@@ -24,9 +24,9 @@ export async function createEditPhoto(newPhoto, id) {
 
   let query = supabase.from("photos");
 
-  if (!id) query = query.insert([{ ...newPhoto, image: imagePath }]);
+  if (id === null) query = query.insert([{ ...newPhoto, image: imagePath }]);
 
-  if (id) {
+  if (id !== null) {
     query = query
       .update({ ...newPhoto, image: imagePath })
       .eq("id", id)
