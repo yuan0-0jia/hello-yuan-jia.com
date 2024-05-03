@@ -26,6 +26,7 @@ function Photo() {
             <div className="my-8 grid grid-cols-3 gap-8">
               {photos
                 .filter((photo) => photo.id !== 0)
+                .sort((cur, next) => cur.id - next.id)
                 .map((photo) => (
                   <img
                     src={photo.image}
