@@ -29,7 +29,7 @@ function Photo() {
                 .map((photo) => (
                   <img
                     src={photo.image}
-                    className="aspect-[3/2] rounded-xl object-cover"
+                    className="aspect-[3/2] w-full rounded-xl object-cover"
                     key={photo.id}
                   />
                 ))}
