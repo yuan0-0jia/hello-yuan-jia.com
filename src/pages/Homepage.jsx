@@ -12,21 +12,21 @@ function Homepage() {
         <div className="flex flex-row items-center justify-center gap-16">
           {isLoading ? (
             <div className="m-24">
-              <Spinner className="fill-zinc-600 w-32 h-32" />
+              <Spinner className="h-32 w-32 fill-zinc-600" />
             </div>
           ) : (
             <>
-              <span className="w-80 block ">
+              <span className="block w-80 ">
                 <img
                   src={ava?.find((photo) => photo.id === 1).image}
-                  className={`rounded-full`}
+                  className="rounded-full md:h-80"
                 />
               </span>
               <div className="items-center">
                 <h1 className="mb-8 text-4xl font-semibold">
                   Hi, I&apos;m Yuan
                   <br />
-                  <span className="text-stone-500 font-light text-xl">
+                  <span className="text-xl font-light text-stone-500">
                     Thank you for visiting my site!
                   </span>
                 </h1>
