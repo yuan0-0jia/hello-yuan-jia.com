@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Paragraph({
   img,
   children,
@@ -13,8 +15,17 @@ export default function Paragraph({
         reverse ? "flex-row-reverse" : "flex-row"
       } items-center gap-8 py-5`}
     >
-      <div className="text-lg font-extralight tracking-wide">{children}</div>
-      {img && <img className="w-1/6 rounded-lg md:h-52 md:w-52" src={img} />}
+      <div
+        className={`text-lg font-extralight tracking-wide ${img && "w-5/6"}`}
+      >
+        {children}
+      </div>
+
+      {img && (
+        <div className="relative w-52 h-52">
+          <Image alt="" fill className="object-cover rounded-lg" src={img} />
+        </div>
+      )}
     </section>
   );
 }

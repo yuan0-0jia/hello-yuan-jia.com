@@ -34,16 +34,15 @@ export default function Project({
         </div>
       </div>
 
-      <span className="relative w-96 h-60 my-5 max-w-md">
+      <div className="relative w-96 h-64 my-5 max-w-md">
         <Image
           alt={header}
           fill
-          quality={75}
           sizes="800x500"
-          className="rounded-xl drop-shadow-2xl md:w-96"
+          className="rounded-xl drop-shadow-2xl"
           src={image}
         />
-      </span>
+      </div>
     </section>
   );
 }

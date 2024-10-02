@@ -32,8 +32,8 @@ body {
     width: 100px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 8px solid theme("colors.Slate.800");
-    border-right-color: theme("colors.Slate.200");
+    border: 8px solid theme("colors.slate.800");
+    border-right-color: theme("colors.slate.200");
     animation: rotate 1s infinite linear;
   }
 
@@ -42,7 +42,7 @@ body {
     width: 20px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 2px solid theme("colors.Slate.200");
+    border: 2px solid theme("colors.slate.200");
     border-right-color: transparent;
     animation: rotate 1s infinite linear;
   }

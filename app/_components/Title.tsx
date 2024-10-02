@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Header({
   title,
   sub,
@@ -18,7 +20,9 @@ export default function Header({
         </p>
       </header>
 
-      <img src={img} className="mb-5 w-full rounded-xl md:h-[700px]" />
+      <div className="relative h-[700px] w-full mb-5">
+        <Image alt="" src={img} fill className="rounded-xl" />
+      </div>
     </>
   );
 }

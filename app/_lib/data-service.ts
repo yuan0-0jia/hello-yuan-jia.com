@@ -1,6 +1,7 @@
-import { supabase } from "./supabase";
+import { createClient } from "@/utils/supabase/server";
 
 export async function getAvatar() {
+  const supabase = await createClient();
   const { data, error } = await supabase.from("avatar").select("*");
 
   // For testing
@@ -8,13 +9,13 @@ export async function getAvatar() {
 
   if (error) {
     console.error(error);
-    notFound();
   }
 
   return data;
 }
 
 export async function getProjects() {
+  const supabase = await createClient();
   const { data, error } = await supabase.from("projects").select("*");
 
   if (error) {
@@ -25,6 +26,7 @@ export async function getProjects() {
 }
 
 export async function getAbout() {
+  const supabase = await createClient();
   const { data, error } = await supabase.from("about").select("*");
 
   if (error) {
@@ -36,6 +38,7 @@ export async function getAbout() {
 }
 
 export async function getPhotos() {
+  const supabase = await createClient();
   const { data, error } = await supabase.from("photos").select("*");
 
   if (error) {

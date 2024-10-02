@@ -3,6 +3,10 @@ import { getAbout } from "../_lib/data-service";
 import Paragraph from "../_components/Paragraph";
 import Title from "../_components/Title";
 
+export const metadata = {
+  title: "About",
+};
+
 export default async function Page() {
   const about = await getAbout();
 

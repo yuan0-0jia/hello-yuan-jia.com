@@ -9,13 +9,26 @@ export default function ThemeSwitch() {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return <CgDarkMode />;
+  if (!mounted)
+    return (
+      <button>
+        <CgDarkMode />
+      </button>
+    );
 
   if (resolvedTheme === "dark") {
-    return <CgDarkMode onClick={() => setTheme("light")} />;
+    return (
+      <button onClick={() => setTheme("light")}>
+        <CgDarkMode />
+      </button>
+    );
   }
 
   if (resolvedTheme === "light") {
-    return <CgDarkMode onClick={() => setTheme("dark")} />;
+    return (
+      <button onClick={() => setTheme("dark")}>
+        <CgDarkMode />
+      </button>
+    );
   }
 }

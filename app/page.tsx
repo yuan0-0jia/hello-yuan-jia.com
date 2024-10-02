@@ -20,7 +20,6 @@ export default async function Home() {
                 fill
                 priority={true}
                 quality={75}
-                sizes="564px"
                 className="object-cover rounded-full"
               />
             </div>
