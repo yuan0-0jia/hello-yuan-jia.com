@@ -3,10 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const origin =
-    process.env.NODE_ENV === "development"
-      ? new URL(request.url).origin
-      : process.env.NEXT_PUBLIC_URL;
+  const origin = process.env.NEXT_PUBLIC_URL;
 
   console.log("Origin:", origin);
 
