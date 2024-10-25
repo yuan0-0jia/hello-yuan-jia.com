@@ -8,6 +8,8 @@ export async function GET(request: Request) {
       ? new URL(request.url).origin
       : process.env.NEXT_PUBLIC_URL;
 
+  console.log("Origin:", origin);
+
   // Check for OAuth error and redirect to error page
   const error = searchParams.get("error");
   if (error) {
