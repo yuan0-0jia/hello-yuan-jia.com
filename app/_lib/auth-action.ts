@@ -40,46 +40,55 @@ export async function getUser() {
   return supabase.auth.getUser();
 }
 
-export async function updateAva(formData: any) {
+export async function updateAva(formData: FormData) {
   const { data, error } = await getUser();
   if (error || !data?.user) throw new Error("You must be logged in");
 
-  const id = formData.get("id");
-  const image = formData.get("image");
+  const id = formData.get("id") as string | null; // Type assertion for id
+  const image = formData.get("image"); // This can be a File or null
+
+  // Check if image is a File and handle it
+  if (!(image instanceof File)) {
+    throw new Error("Image file is required and must be a File type");
+  }
 
   const supabase = await createClient();
 
-  const hasImagePath = image?.startsWith?.(
-    process.env.NEXT_PUBLIC_SUPABASE_URL
+  const imageName = image.name.replaceAll("/", ""); // Sanitize image name
+  const imagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
+  const hasImagePath = imagePath.startsWith(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!
   );
-  const imageName = `${image.name}`.replaceAll("/", "");
 
-  const imagePath = hasImagePath
-    ? image
-    : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
+  const query = supabase.from("avatar");
 
-  let query: any = supabase.from("avatar");
-
+  // Use update method only if id is present
   if (id) {
-    query = query.update({ image: imagePath }).eq("id", id).select();
+    // Perform the update operation
+    const { error: updateError } = await query
+      .update({ image: hasImagePath ? imagePath : imageName }) // Use imageName if it's a new upload
+      .eq("id", id);
+
+    if (updateError) {
+      console.error(updateError);
+      throw new Error("Ava could not be updated");
+    }
   }
 
-  const { data: queryData, error: queryError } = await query.select().single();
-
-  if (queryError) {
-    console.error(queryError);
-    throw new Error("Ava could not be created");
-  }
-
+  // Upload the image to Supabase Storage
   const { error: storageError } = await supabase.storage
     .from("photos")
     .upload(imageName, image, { upsert: true });
 
   if (storageError) {
-    await supabase.from("avatar").delete().eq("id", queryData.id);
+    // If storage fails, delete the avatar if it was created
+    if (id) {
+      await supabase.from("avatar").delete().eq("id", id);
+    }
     console.error(storageError);
     throw new Error("Ava could not be uploaded, ava was not created");
   }
 
+  // Optionally handle revalidation after the upload
   revalidatePath("/", "layout");
 }
