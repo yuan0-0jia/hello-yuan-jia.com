@@ -3,7 +3,10 @@ import { createClient } from "@/utils/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const origin = new URL(request.url).origin;
+  const origin =
+    process.env.NODE_ENV === "development"
+      ? new URL(request.url).origin
+      : process.env.NEXT_PUBLIC_URL;
 
   // Check for OAuth error and redirect to error page
   const error = searchParams.get("error");
