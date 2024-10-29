@@ -6,7 +6,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { template: "%s - Yuan Jia", default: "Yuan Jia" },
-  verification: { google: "GLWAOr9Q8E8GyyWHIs-vZDuiYE9Q0bm_vxO2avsFZQI" },
+  verification: {
+    google: [
+      "GLWAOr9Q8E8GyyWHIs-vZDuiYE9Q0bm_vxO2avsFZQI",
+      "LrlN2UweX8hNw3Wcrx7HVdFy3KEUtYl1PbJasrI2-No",
+    ],
+  },
 };
 
 export default function RootLayout({
