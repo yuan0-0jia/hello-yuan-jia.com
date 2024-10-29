@@ -61,8 +61,7 @@ export default async function Page() {
           <p className="">
             We do not sell, rent, or trade your information to third parties. We
             may share information with trusted third-party services only to the
-            extent necessary to provide our services, such as [list any specific
-            third-party services if applicable].
+            extent necessary to provide our services.
           </p>
         </section>
 
