@@ -1,5 +1,6 @@
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa6";
 import Icon from "./Icon";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -33,6 +34,12 @@ export function Footer() {
           <p className="before:mx-auto before:my-6 before:block before:w-16 before:h-1px before:border-t before:border-slate-500 dark:before:border-slate-400 before:opacity-35 text-stone-400 dark:text-stone-300">
             &copy; {new Date().getFullYear()} Yuan Jia. All rights reserved.
           </p>
+          <Link
+            href="/privacy"
+            className="text-stone-400 dark:text-stone-300 hover:text-stone-500 dark:hover:text-stone-200"
+          >
+            Privacy
+          </Link>
         </div>
       </section>
     </div>
