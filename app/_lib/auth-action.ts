@@ -15,7 +15,7 @@ export async function login() {
         access_type: "offline",
         prompt: "consent",
       },
-      redirectTo: `${process.env.NEXT_PUBLIC_URL}/api/auth/callback?next=/account`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback?next=/account`,
     },
   });
 
