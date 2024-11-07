@@ -28,7 +28,7 @@ export default async function Navigation() {
               </Link>
             </li>
             <li className="flex flex-col justify-center">
-              <Link href="/photo" className="hover:text-gray-400 ">
+              <Link href="/photos" className="hover:text-gray-400 ">
                 Photos
               </Link>
             </li>
