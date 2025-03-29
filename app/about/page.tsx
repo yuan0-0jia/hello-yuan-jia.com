@@ -16,7 +16,7 @@ export default async function Page() {
         <Title
           title={"About Me"}
           sub={"Yuan Jia"}
-          img={about?.find((photo) => photo.id === 0)?.photo || ""}
+          img={about?.find((photo) => photo.id === 0).photo}
         />
 
         <div>

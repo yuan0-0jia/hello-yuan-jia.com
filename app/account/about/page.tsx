@@ -53,16 +53,18 @@ async function AboutForm() {
             <tr key={section.id}>
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="relative h-16 w-16">
-                  <Image
-                    alt={section.title}
-                    src={section.photo}
-                    fill
-                    className="object-cover rounded-md"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/placeholder.png";
-                    }}
-                  />
+                  {section.photo ? (
+                    <Image
+                      alt={section.title}
+                      src={section.photo}
+                      fill
+                      className="object-cover rounded-md"
+                    />
+                  ) : (
+                    <div className="h-full w-full flex items-center justify-center text-stone-400 dark:text-stone-500">
+                      /
+                    </div>
+                  )}
                 </div>
               </td>
               <td className="px-6 py-4">

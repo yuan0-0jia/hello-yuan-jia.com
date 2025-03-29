@@ -100,21 +100,24 @@ export async function updateProject(formData: FormData) {
   const id = formData.get("id") as string;
   const project = formData.get("project") as string;
   const desc = formData.get("desc") as string;
-  const thumbnail = formData.get("thumbnail") as File | null;
+  const image = formData.get("image") as File | null;
   const to = formData.get("to") as string;
   const button = formData.get("button") as string;
 
-  if (!id || !project || !desc) {
+  if (!id || !project || !desc || !to || !button) {
     throw new Error("Required fields are missing");
   }
 
   const supabase = await createClient();
 
-  let imagePath = formData.get("currentImage") as string;
+  let imagePath = formData.get("currentImage") as string | null;
+  if (!imagePath) {
+    throw new Error("Current image path is required");
+  }
 
   // Handle image upload if a new image is provided
-  if (thumbnail instanceof File) {
-    const imageName = thumbnail.name.replaceAll("/", "");
+  if (image instanceof File) {
+    const imageName = image.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
       process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -123,7 +126,7 @@ export async function updateProject(formData: FormData) {
     // Upload the new image
     const { error: storageError } = await supabase.storage
       .from("photos")
-      .upload(imageName, thumbnail, { upsert: true });
+      .upload(imageName, image, { upsert: true });
 
     if (storageError) {
       console.error(storageError);
@@ -134,15 +137,27 @@ export async function updateProject(formData: FormData) {
   }
 
   // Update the project
+  const updateData: {
+    project: string;
+    desc: string;
+    to: string;
+    button: string;
+    thumbnail?: string;
+  } = {
+    project,
+    desc,
+    to,
+    button,
+  };
+
+  // Only include thumbnail in update if a new image was provided
+  if (image instanceof File && imagePath) {
+    updateData.thumbnail = imagePath;
+  }
+
   const { error: updateError } = await supabase
     .from("projects")
-    .update({
-      project,
-      desc,
-      thumbnail: imagePath,
-      to,
-      button,
-    })
+    .update(updateData)
     .eq("id", id);
 
   if (updateError) {
@@ -222,7 +237,10 @@ export async function updateAbout(formData: FormData) {
 
   const supabase = await createClient();
 
-  let imagePath = formData.get("currentImage") as string;
+  let imagePath = formData.get("currentImage") as string | null;
+  if (!imagePath) {
+    throw new Error("Current image path is required");
+  }
 
   // Handle image upload if a new image is provided
   if (photo instanceof File) {
@@ -245,27 +263,20 @@ export async function updateAbout(formData: FormData) {
     imagePath = hasImagePath ? newImagePath : imageName;
   }
 
-  try {
-    // Update the about section
-    const { error: updateError } = await supabase
-      .from("about")
-      .update({
-        title,
-        desc,
-        photo: imagePath,
-      })
-      .eq("id", id);
+  // Update the about section
+  const { error: updateError } = await supabase
+    .from("about")
+    .update({
+      title,
+      desc,
+      photo: imagePath,
+    })
+    .eq("id", id);
 
-    if (updateError) {
-      console.error(updateError);
-      throw new Error("About section could not be updated");
-    }
-
-    revalidatePath("/", "layout");
-  } catch (error) {
-    console.error(error);
-    throw new Error(
-      error instanceof Error ? error.message : "An unexpected error occurred"
-    );
+  if (updateError) {
+    console.error(updateError);
+    throw new Error("About section could not be updated");
   }
+
+  revalidatePath("/", "layout");
 }
