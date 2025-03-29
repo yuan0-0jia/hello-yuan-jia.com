@@ -150,3 +150,113 @@ export async function updateProject(formData: FormData) {
 
   revalidatePath("/", "layout");
 }
+
+export async function updatePhoto(formData: FormData) {
+  const { data, error } = await getUser();
+  if (error || !data?.user) throw new Error("You must be logged in");
+
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const image = formData.get("image") as File | null;
+
+  if (!id || !title) {
+    throw new Error("Required fields are missing");
+  }
+
+  const supabase = await createClient();
+
+  let imagePath = formData.get("currentImage") as string;
+
+  // Handle image upload if a new image is provided
+  if (image instanceof File) {
+    const imageName = image.name.replaceAll("/", "");
+    const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
+    const hasImagePath = newImagePath.startsWith(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!
+    );
+
+    // Upload the new image
+    const { error: storageError } = await supabase.storage
+      .from("photos")
+      .upload(imageName, image, { upsert: true });
+
+    if (storageError) {
+      console.error(storageError);
+      throw new Error("Photo could not be uploaded");
+    }
+
+    imagePath = hasImagePath ? newImagePath : imageName;
+  }
+
+  // Update the photo
+  const { error: updateError } = await supabase
+    .from("photos")
+    .update({
+      title,
+      image: imagePath,
+    })
+    .eq("id", id);
+
+  if (updateError) {
+    console.error(updateError);
+    throw new Error("Photo could not be updated");
+  }
+
+  revalidatePath("/", "layout");
+}
+
+export async function updateAbout(formData: FormData) {
+  const { data, error } = await getUser();
+  if (error || !data?.user) throw new Error("You must be logged in");
+
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const content = formData.get("content") as string;
+  const image = formData.get("image") as File | null;
+
+  if (!id || !title || !content) {
+    throw new Error("Required fields are missing");
+  }
+
+  const supabase = await createClient();
+
+  let imagePath = formData.get("currentImage") as string;
+
+  // Handle image upload if a new image is provided
+  if (image instanceof File) {
+    const imageName = image.name.replaceAll("/", "");
+    const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
+    const hasImagePath = newImagePath.startsWith(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!
+    );
+
+    // Upload the new image
+    const { error: storageError } = await supabase.storage
+      .from("photos")
+      .upload(imageName, image, { upsert: true });
+
+    if (storageError) {
+      console.error(storageError);
+      throw new Error("About image could not be uploaded");
+    }
+
+    imagePath = hasImagePath ? newImagePath : imageName;
+  }
+
+  // Update the about section
+  const { error: updateError } = await supabase
+    .from("about")
+    .update({
+      title,
+      content,
+      image: imagePath,
+    })
+    .eq("id", id);
+
+  if (updateError) {
+    console.error(updateError);
+    throw new Error("About section could not be updated");
+  }
+
+  revalidatePath("/", "layout");
+}
