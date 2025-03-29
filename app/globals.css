@@ -14,6 +14,16 @@
   }
 }
 
+html {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: theme("colors.slate.400") theme("colors.slate.100");
+}
+
+html.dark {
+  scrollbar-color: theme("colors.slate.600") theme("colors.slate.800");
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
