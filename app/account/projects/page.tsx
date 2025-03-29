@@ -152,10 +152,10 @@ export default async function Page() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <div className="space-y-10">
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-3">Projects Management</h1>
+          <h1 className="text-3xl font-semibold mb-2">Projects Management</h1>
           <p className="text-stone-500 dark:text-stone-300">
             Manage your portfolio projects
           </p>

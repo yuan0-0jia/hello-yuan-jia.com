@@ -15,7 +15,7 @@ async function PhotosList() {
 
   if (!photos || photos.length === 0) {
     return (
-      <div className="text-center py-8">
+      <div className="text-center py-6">
         <p className="text-stone-500 dark:text-stone-300">
           No photos found. Add your first photo to get started.
         </p>
@@ -33,14 +33,14 @@ async function PhotosList() {
       {headerPhoto && (
         <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-6">
           <h2 className="text-lg font-medium mb-4">Header Photo</h2>
-          <form action={updatePhoto}>
+          <form action={updatePhoto} className="space-y-4">
             <input type="hidden" name="id" value={headerPhoto.id} />
             <input
               type="hidden"
               name="currentImage"
               value={headerPhoto.image}
             />
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               <div className="relative h-24 w-24 flex-shrink-0">
                 <Image
                   alt="Header Photo"
@@ -77,13 +77,13 @@ async function PhotosList() {
             <tr>
               <th
                 scope="col"
-                className="px-4 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
               >
                 Preview
               </th>
               <th
                 scope="col"
-                className="px-4 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+                className="px-6 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
               >
                 Actions
               </th>
@@ -92,21 +92,18 @@ async function PhotosList() {
           <tbody className="bg-white dark:bg-zinc-900 divide-y divide-stone-200 dark:divide-stone-700">
             {otherPhotos.map((photo) => (
               <tr key={photo.id}>
-                <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="relative h-14 w-14">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="relative h-16 w-16">
                     <Image
-                      alt=""
+                      alt="Photo preview"
                       src={photo.image}
                       fill
                       className="object-cover rounded-md"
                     />
                   </div>
                 </td>
-                <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
-                  <form
-                    action={updatePhoto}
-                    className="flex items-center justify-end gap-4"
-                  >
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <form action={updatePhoto} id={`form-${photo.id}`}>
                     <input type="hidden" name="id" value={photo.id} />
                     <input
                       type="hidden"
@@ -118,15 +115,20 @@ async function PhotosList() {
                       name="image"
                       accept="image/*"
                       className="hidden"
-                      id={`image-${photo.id}`}
+                      id={`photo-${photo.id}`}
                     />
                     <label
-                      htmlFor={`image-${photo.id}`}
-                      className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
+                      htmlFor={`photo-${photo.id}`}
+                      className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100 mr-4"
                     >
                       Change Image
                     </label>
-                    <SubmitButton>Update</SubmitButton>
+                    <SubmitButton
+                      form={`form-${photo.id}`}
+                      pendingLabel="Updating..."
+                    >
+                      Update
+                    </SubmitButton>
                   </form>
                 </td>
               </tr>
@@ -146,10 +148,10 @@ export default async function Page() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <div className="space-y-10">
+    <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-3">Photos Management</h1>
+          <h1 className="text-3xl font-semibold mb-2">Photos Management</h1>
           <p className="text-stone-500 dark:text-stone-300">
             Manage your portfolio photos
           </p>

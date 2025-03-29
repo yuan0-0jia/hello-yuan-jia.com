@@ -18,22 +18,22 @@ export default async function Page() {
   const avatar = await getAvatar();
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-2xl">
-      <div className="space-y-10">
+    <div className="container mx-auto px-4 py-8 max-w-2xl">
+      <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-3">Account Settings</h1>
+          <h1 className="text-3xl font-semibold mb-2">Account Settings</h1>
           <p className="text-stone-500 dark:text-stone-300">
             Welcome back, {data?.user?.user_metadata?.name}
           </p>
         </div>
 
-        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8">
+        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-6">
           <div className="max-w-md mx-auto">
-            <h2 className="text-xl font-medium mb-6 text-center">
+            <h2 className="text-lg font-medium mb-4 text-center">
               Profile Photo
             </h2>
-            <form action={updateAva} className="space-y-6">
-              <div className="flex flex-col items-center gap-6">
+            <form action={updateAva} className="space-y-4">
+              <div className="flex flex-col items-center gap-4">
                 <div className="relative h-40 w-40 aspect-square">
                   <Image
                     alt="Profile"

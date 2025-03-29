@@ -227,11 +227,10 @@ export async function updateAbout(formData: FormData) {
   if (error || !data?.user) throw new Error("You must be logged in");
 
   const id = formData.get("id") as string;
-  const title = formData.get("title") as string;
   const desc = formData.get("desc") as string;
   const photo = formData.get("photo") as File | null;
 
-  if (!id || !title || !desc) {
+  if (!id || !desc) {
     throw new Error("Required fields are missing");
   }
 
@@ -267,7 +266,6 @@ export async function updateAbout(formData: FormData) {
   const { error: updateError } = await supabase
     .from("about")
     .update({
-      title,
       desc,
       photo: imagePath,
     })
