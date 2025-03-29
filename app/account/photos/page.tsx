@@ -28,20 +28,20 @@ async function PhotosList() {
   const otherPhotos = photos.filter((photo) => photo.id !== 0);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Header Photo Section */}
       {headerPhoto && (
-        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-8">
-          <h2 className="text-xl font-medium mb-6">Header Photo</h2>
-          <form action={updatePhoto} className="space-y-6">
+        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-6">
+          <h2 className="text-lg font-medium mb-4">Header Photo</h2>
+          <form action={updatePhoto}>
             <input type="hidden" name="id" value={headerPhoto.id} />
             <input
               type="hidden"
               name="currentImage"
               value={headerPhoto.image}
             />
-            <div className="flex items-center space-x-4">
-              <div className="relative h-32 w-32">
+            <div className="flex items-center gap-6">
+              <div className="relative h-24 w-24 flex-shrink-0">
                 <Image
                   alt="Header Photo"
                   src={headerPhoto.image}
@@ -49,7 +49,7 @@ async function PhotosList() {
                   className="object-cover rounded-md"
                 />
               </div>
-              <div className="flex-1">
+              <div className="flex items-center gap-4">
                 <input
                   type="file"
                   name="image"
@@ -77,13 +77,13 @@ async function PhotosList() {
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+                className="px-4 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
               >
                 Preview
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+                className="px-4 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
               >
                 Actions
               </th>
@@ -92,8 +92,8 @@ async function PhotosList() {
           <tbody className="bg-white dark:bg-zinc-900 divide-y divide-stone-200 dark:divide-stone-700">
             {otherPhotos.map((photo) => (
               <tr key={photo.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="relative h-16 w-16">
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="relative h-14 w-14">
                     <Image
                       alt=""
                       src={photo.image}
@@ -102,10 +102,10 @@ async function PhotosList() {
                     />
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
                   <form
                     action={updatePhoto}
-                    className="flex items-center justify-end space-x-4"
+                    className="flex items-center justify-end gap-4"
                   >
                     <input type="hidden" name="id" value={photo.id} />
                     <input

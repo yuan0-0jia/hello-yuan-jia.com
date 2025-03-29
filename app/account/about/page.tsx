@@ -62,7 +62,11 @@ async function AboutForm() {
                 </div>
               </td>
               <td className="px-6 py-4">
-                <form action={updateAbout} className="space-y-4">
+                <form
+                  action={updateAbout}
+                  id={`form-${section.id}`}
+                  className="space-y-4"
+                >
                   <input type="hidden" name="id" value={section.id} />
                   <input
                     type="hidden"
@@ -99,18 +103,11 @@ async function AboutForm() {
                     >
                       Change Image
                     </label>
-                    <SubmitButton>Update</SubmitButton>
                   </div>
                 </form>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <button
-                  type="submit"
-                  form={`form-${section.id}`}
-                  className="text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
-                >
-                  Update
-                </button>
+                <SubmitButton form={`form-${section.id}`}>Update</SubmitButton>
               </td>
             </tr>
           ))}
