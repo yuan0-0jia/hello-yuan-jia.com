@@ -58,6 +58,10 @@ async function AboutForm() {
                     src={section.photo}
                     fill
                     className="object-cover rounded-md"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/placeholder.png";
+                    }}
                   />
                 </div>
               </td>
@@ -104,10 +108,19 @@ async function AboutForm() {
                       Change Image
                     </label>
                   </div>
+                  <div
+                    id={`error-${section.id}`}
+                    className="text-red-500 text-sm hidden"
+                  ></div>
                 </form>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <SubmitButton form={`form-${section.id}`}>Update</SubmitButton>
+                <SubmitButton
+                  form={`form-${section.id}`}
+                  pendingLabel="Updating..."
+                >
+                  Update
+                </SubmitButton>
               </td>
             </tr>
           ))}

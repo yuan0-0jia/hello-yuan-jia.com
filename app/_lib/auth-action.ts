@@ -245,20 +245,27 @@ export async function updateAbout(formData: FormData) {
     imagePath = hasImagePath ? newImagePath : imageName;
   }
 
-  // Update the about section
-  const { error: updateError } = await supabase
-    .from("about")
-    .update({
-      title,
-      desc,
-      photo: imagePath,
-    })
-    .eq("id", id);
+  try {
+    // Update the about section
+    const { error: updateError } = await supabase
+      .from("about")
+      .update({
+        title,
+        desc,
+        photo: imagePath,
+      })
+      .eq("id", id);
 
-  if (updateError) {
-    console.error(updateError);
-    throw new Error("About section could not be updated");
+    if (updateError) {
+      console.error(updateError);
+      throw new Error("About section could not be updated");
+    }
+
+    revalidatePath("/", "layout");
+  } catch (error) {
+    console.error(error);
+    throw new Error(
+      error instanceof Error ? error.message : "An unexpected error occurred"
+    );
   }
-
-  revalidatePath("/", "layout");
 }
