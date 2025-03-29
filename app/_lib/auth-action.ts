@@ -213,10 +213,10 @@ export async function updateAbout(formData: FormData) {
 
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
-  const content = formData.get("content") as string;
-  const image = formData.get("image") as File | null;
+  const desc = formData.get("desc") as string;
+  const photo = formData.get("photo") as File | null;
 
-  if (!id || !title || !content) {
+  if (!id || !title || !desc) {
     throw new Error("Required fields are missing");
   }
 
@@ -225,8 +225,8 @@ export async function updateAbout(formData: FormData) {
   let imagePath = formData.get("currentImage") as string;
 
   // Handle image upload if a new image is provided
-  if (image instanceof File) {
-    const imageName = image.name.replaceAll("/", "");
+  if (photo instanceof File) {
+    const imageName = photo.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
       process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -235,7 +235,7 @@ export async function updateAbout(formData: FormData) {
     // Upload the new image
     const { error: storageError } = await supabase.storage
       .from("photos")
-      .upload(imageName, image, { upsert: true });
+      .upload(imageName, photo, { upsert: true });
 
     if (storageError) {
       console.error(storageError);
@@ -250,8 +250,8 @@ export async function updateAbout(formData: FormData) {
     .from("about")
     .update({
       title,
-      content,
-      image: imagePath,
+      desc,
+      photo: imagePath,
     })
     .eq("id", id);
 
