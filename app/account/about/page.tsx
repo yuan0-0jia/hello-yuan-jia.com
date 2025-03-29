@@ -37,15 +37,7 @@ async function AboutForm() {
           <form action={updateAbout} id="form-header" className="space-y-4">
             <input type="hidden" name="id" value={header.id} />
             <input type="hidden" name="currentImage" value={header.photo} />
-            <div className="space-y-2">
-              <textarea
-                name="desc"
-                defaultValue={header.desc}
-                required
-                rows={3}
-                className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
-              />
-            </div>
+            <input type="hidden" name="desc" value={header.desc} />
             <div className="flex items-center space-x-4">
               <input
                 type="file"
