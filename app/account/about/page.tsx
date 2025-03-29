@@ -38,30 +38,44 @@ async function AboutForm() {
             <input type="hidden" name="id" value={header.id} />
             <input type="hidden" name="currentImage" value={header.photo} />
             <input type="hidden" name="desc" value={header.desc} />
-            <div className="flex items-center space-x-4">
-              <input
-                type="file"
-                name="photo"
-                accept="image/*"
-                className="hidden"
-                id="photo-header"
-              />
-              <label
-                htmlFor="photo-header"
-                className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
-              >
-                Change Image
-              </label>
+            <div className="flex items-center gap-4">
+              <div className="relative h-24 w-24 flex-shrink-0">
+                {header.photo ? (
+                  <Image
+                    alt="Header preview"
+                    src={header.photo}
+                    fill
+                    className="object-cover rounded-md"
+                  />
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center text-stone-400 dark:text-stone-500">
+                    /
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center space-x-4">
+                <input
+                  type="file"
+                  name="photo"
+                  accept="image/*"
+                  className="hidden"
+                  id="photo-header"
+                />
+                <label
+                  htmlFor="photo-header"
+                  className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
+                >
+                  Change Image
+                </label>
+                <SubmitButton form="form-header" pendingLabel="Updating...">
+                  Update Header
+                </SubmitButton>
+              </div>
             </div>
             <div
               id="error-header"
               className="text-red-500 text-sm hidden"
             ></div>
-            <div className="flex justify-end">
-              <SubmitButton form="form-header" pendingLabel="Updating...">
-                Update Header
-              </SubmitButton>
-            </div>
           </form>
         </div>
       )}
