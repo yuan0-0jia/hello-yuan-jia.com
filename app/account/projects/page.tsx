@@ -28,26 +28,30 @@ async function ProjectsList() {
       {projects.map((project) => (
         <div
           key={project.id}
-          className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-8"
+          className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8"
         >
           <form action={updateProject} className="space-y-6">
             <input type="hidden" name="id" value={project.id} />
-            <input type="hidden" name="currentImage" value={project.image} />
+            <input
+              type="hidden"
+              name="currentImage"
+              value={project.thumbnail}
+            />
 
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <div>
                   <label
-                    htmlFor={`title-${project.id}`}
+                    htmlFor={`project-${project.id}`}
                     className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
                   >
-                    Title
+                    Project Title
                   </label>
                   <input
                     type="text"
-                    id={`title-${project.id}`}
-                    name="title"
-                    defaultValue={project.title}
+                    id={`project-${project.id}`}
+                    name="project"
+                    defaultValue={project.project}
                     required
                     className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
                   />
@@ -55,15 +59,15 @@ async function ProjectsList() {
 
                 <div>
                   <label
-                    htmlFor={`description-${project.id}`}
+                    htmlFor={`desc-${project.id}`}
                     className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
                   >
                     Description
                   </label>
                   <textarea
-                    id={`description-${project.id}`}
-                    name="description"
-                    defaultValue={project.description}
+                    id={`desc-${project.id}`}
+                    name="desc"
+                    defaultValue={project.desc}
                     required
                     rows={4}
                     className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
@@ -72,16 +76,32 @@ async function ProjectsList() {
 
                 <div>
                   <label
-                    htmlFor={`link-${project.id}`}
+                    htmlFor={`to-${project.id}`}
                     className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
                   >
                     Project Link
                   </label>
                   <input
                     type="url"
-                    id={`link-${project.id}`}
-                    name="link"
-                    defaultValue={project.link}
+                    id={`to-${project.id}`}
+                    name="to"
+                    defaultValue={project.to}
+                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor={`button-${project.id}`}
+                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                  >
+                    Button Text
+                  </label>
+                  <input
+                    type="text"
+                    id={`button-${project.id}`}
+                    name="button"
+                    defaultValue={project.button}
                     className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
                   />
                 </div>
@@ -90,23 +110,23 @@ async function ProjectsList() {
               <div className="space-y-4">
                 <div>
                   <label
-                    htmlFor={`image-${project.id}`}
+                    htmlFor={`thumbnail-${project.id}`}
                     className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
                   >
                     Project Image
                   </label>
                   <div className="relative h-48 w-full mb-4">
                     <Image
-                      alt={project.title}
-                      src={project.image}
+                      alt={project.project}
+                      src={project.thumbnail}
                       fill
                       className="object-cover rounded-md"
                     />
                   </div>
                   <input
                     type="file"
-                    id={`image-${project.id}`}
-                    name="image"
+                    id={`thumbnail-${project.id}`}
+                    name="thumbnail"
                     accept="image/*"
                     className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-stone-900 dark:file:text-stone-100 file:text-sm file:font-medium placeholder:text-stone-400 dark:placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500"
                   />

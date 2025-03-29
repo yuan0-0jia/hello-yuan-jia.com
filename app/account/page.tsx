@@ -27,7 +27,7 @@ export default async function Page() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-8">
+        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8">
           <div className="max-w-md mx-auto">
             <h2 className="text-xl font-medium mb-6 text-center">
               Profile Photo

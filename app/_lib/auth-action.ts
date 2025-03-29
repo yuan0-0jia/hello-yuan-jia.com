@@ -98,12 +98,13 @@ export async function updateProject(formData: FormData) {
   if (error || !data?.user) throw new Error("You must be logged in");
 
   const id = formData.get("id") as string;
-  const title = formData.get("title") as string;
-  const description = formData.get("description") as string;
-  const image = formData.get("image") as File | null;
-  const link = formData.get("link") as string;
+  const project = formData.get("project") as string;
+  const desc = formData.get("desc") as string;
+  const thumbnail = formData.get("thumbnail") as File | null;
+  const to = formData.get("to") as string;
+  const button = formData.get("button") as string;
 
-  if (!id || !title || !description) {
+  if (!id || !project || !desc) {
     throw new Error("Required fields are missing");
   }
 
@@ -112,8 +113,8 @@ export async function updateProject(formData: FormData) {
   let imagePath = formData.get("currentImage") as string;
 
   // Handle image upload if a new image is provided
-  if (image instanceof File) {
-    const imageName = image.name.replaceAll("/", "");
+  if (thumbnail instanceof File) {
+    const imageName = thumbnail.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
       process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -122,7 +123,7 @@ export async function updateProject(formData: FormData) {
     // Upload the new image
     const { error: storageError } = await supabase.storage
       .from("photos")
-      .upload(imageName, image, { upsert: true });
+      .upload(imageName, thumbnail, { upsert: true });
 
     if (storageError) {
       console.error(storageError);
@@ -136,10 +137,11 @@ export async function updateProject(formData: FormData) {
   const { error: updateError } = await supabase
     .from("projects")
     .update({
-      title,
-      description,
-      image: imagePath,
-      link,
+      project,
+      desc,
+      thumbnail: imagePath,
+      to,
+      button,
     })
     .eq("id", id);
 

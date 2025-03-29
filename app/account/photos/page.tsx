@@ -24,69 +24,90 @@ async function PhotosList() {
   }
 
   return (
-    <div className="grid gap-8">
-      {photos.map((photo) => (
-        <div
-          key={photo.id}
-          className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm p-8"
-        >
-          <form action={updatePhoto} className="space-y-6">
-            <input type="hidden" name="id" value={photo.id} />
-            <input type="hidden" name="currentImage" value={photo.image} />
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor={`title-${photo.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
-                  >
-                    Title
-                  </label>
+    <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm overflow-hidden">
+      <table className="min-w-full divide-y divide-stone-200 dark:divide-stone-700">
+        <thead className="bg-stone-50 dark:bg-zinc-800">
+          <tr>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+            >
+              Preview
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+            >
+              Title
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white dark:bg-zinc-900 divide-y divide-stone-200 dark:divide-stone-700">
+          {photos.map((photo) => (
+            <tr key={photo.id}>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="relative h-16 w-16">
+                  <Image
+                    alt={photo.title}
+                    src={photo.image}
+                    fill
+                    className="object-cover rounded-md"
+                  />
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <form
+                  action={updatePhoto}
+                  className="flex items-center space-x-4"
+                >
+                  <input type="hidden" name="id" value={photo.id} />
+                  <input
+                    type="hidden"
+                    name="currentImage"
+                    value={photo.image}
+                  />
                   <input
                     type="text"
-                    id={`title-${photo.id}`}
                     name="title"
                     defaultValue={photo.title}
                     required
                     className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
                   />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor={`image-${photo.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
-                  >
-                    Photo
-                  </label>
-                  <div className="relative h-64 w-full mb-4">
-                    <Image
-                      alt={photo.title}
-                      src={photo.image}
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
                   <input
                     type="file"
-                    id={`image-${photo.id}`}
                     name="image"
                     accept="image/*"
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-stone-900 dark:file:text-stone-100 file:text-sm file:font-medium placeholder:text-stone-400 dark:placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500"
+                    className="hidden"
+                    id={`image-${photo.id}`}
                   />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-end">
-              <SubmitButton>Update Photo</SubmitButton>
-            </div>
-          </form>
-        </div>
-      ))}
+                  <label
+                    htmlFor={`image-${photo.id}`}
+                    className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
+                  >
+                    Change Image
+                  </label>
+                  <SubmitButton>Update</SubmitButton>
+                </form>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <button
+                  type="submit"
+                  form={`form-${photo.id}`}
+                  className="text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
+                >
+                  Update
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
