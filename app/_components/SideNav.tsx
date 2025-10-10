@@ -33,12 +33,12 @@ function SideNavigation() {
 
   return (
     <nav className="border-r border-slate-300">
-      <ul className="flex flex-col gap-2 h-full text-lg">
+      <ul className="flex flex-col gap-1 h-full text-base">
         {navLinks.map((link) => (
           <li key={link.name}>
             <Link
-              className={`mx-2 rounded-lg py-3 px-5 hover:bg-stone-200
-                dark:hover:bg-zinc-800 flex items-center gap-4 font-normal ${
+              className={`mx-2 rounded-lg py-2 px-4 hover:bg-stone-200
+                dark:hover:bg-zinc-800 flex items-center gap-3 font-normal ${
                   pathname === link.href ? "bg-stone-100 dark:bg-zinc-900" : ""
                 }`}
               href={link.href}

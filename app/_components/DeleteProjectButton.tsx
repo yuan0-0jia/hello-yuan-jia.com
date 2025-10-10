@@ -1,0 +1,61 @@
+"use client";
+
+import { useState } from "react";
+import { FaXmark } from "react-icons/fa6";
+import { deleteProject } from "../_lib/auth-action";
+import SpinnerMini from "./SpinnerMini";
+
+export default function DeleteProjectButton({
+  projectId,
+}: {
+  projectId: string;
+}) {
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      const formData = new FormData();
+      formData.append("id", projectId);
+      await deleteProject(formData);
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      setIsDeleting(false);
+    }
+  };
+
+  if (showConfirm) {
+    return (
+      <div className="absolute top-2 left-2 flex gap-2 z-10">
+        <button
+          type="button"
+          onClick={handleDelete}
+          disabled={isDeleting}
+          className="bg-red-600 dark:bg-red-700 text-white rounded-md px-3 py-1.5 font-semibold hover:bg-red-700 dark:hover:bg-red-800 disabled:cursor-not-allowed disabled:bg-red-400 dark:disabled:bg-red-500 text-xs"
+        >
+          {isDeleting ? <SpinnerMini /> : "Confirm"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowConfirm(false)}
+          disabled={isDeleting}
+          className="bg-stone-200 dark:bg-zinc-800 rounded-md px-3 py-1.5 font-semibold hover:bg-stone-300 dark:hover:bg-zinc-700 disabled:cursor-not-allowed text-xs"
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => setShowConfirm(true)}
+      className="absolute top-2 left-2 w-7 h-7 flex items-center justify-center rounded-full bg-stone-200 dark:bg-zinc-800 text-stone-600 dark:text-stone-300 hover:bg-red-100 dark:hover:bg-red-900 hover:text-red-600 dark:hover:text-red-400 transition-colors z-10"
+      aria-label="Delete project"
+    >
+      <FaXmark className="w-4 h-4" />
+    </button>
+  );
+}
