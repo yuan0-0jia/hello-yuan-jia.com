@@ -168,6 +168,102 @@ export async function updateProject(formData: FormData) {
   revalidatePath("/", "layout");
 }
 
+export async function createProject(formData: FormData) {
+  const { data, error } = await getUser();
+  if (error || !data?.user) throw new Error("You must be logged in");
+
+  const project = formData.get("project") as string;
+  const desc = formData.get("desc") as string;
+  const image = formData.get("image") as File | null;
+  const to = formData.get("to") as string;
+  const button = formData.get("button") as string;
+
+  if (!project || !desc || !to || !button) {
+    throw new Error("Required fields are missing");
+  }
+
+  const supabase = await createClient();
+
+  let imagePath: string | null = null;
+
+  // Handle image upload if an image is provided
+  if (image instanceof File) {
+    const imageName = image.name.replaceAll("/", "");
+    const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
+    const hasImagePath = newImagePath.startsWith(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!
+    );
+
+    // Upload the image
+    const { error: storageError } = await supabase.storage
+      .from("photos")
+      .upload(imageName, image, { upsert: true });
+
+    if (storageError) {
+      console.error(storageError);
+      throw new Error("Project image could not be uploaded");
+    }
+
+    imagePath = hasImagePath ? newImagePath : imageName;
+  }
+
+  // Create the project
+  const insertData: {
+    project: string;
+    desc: string;
+    to: string;
+    button: string;
+    thumbnail?: string;
+  } = {
+    project,
+    desc,
+    to,
+    button,
+  };
+
+  // Include thumbnail if an image was provided
+  if (imagePath) {
+    insertData.thumbnail = imagePath;
+  }
+
+  const { error: insertError } = await supabase
+    .from("projects")
+    .insert(insertData);
+
+  if (insertError) {
+    console.error(insertError);
+    throw new Error("Project could not be created");
+  }
+
+  revalidatePath("/", "layout");
+}
+
+export async function deleteProject(formData: FormData) {
+  const { data, error } = await getUser();
+  if (error || !data?.user) throw new Error("You must be logged in");
+
+  const id = formData.get("id") as string;
+
+  if (!id) {
+    throw new Error("Project ID is required");
+  }
+
+  const supabase = await createClient();
+
+  // Delete the project
+  const { error: deleteError } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", id);
+
+  if (deleteError) {
+    console.error(deleteError);
+    throw new Error("Project could not be deleted");
+  }
+
+  revalidatePath("/", "layout");
+}
+
 export async function updatePhoto(formData: FormData) {
   const { data, error } = await getUser();
   if (error || !data?.user) throw new Error("You must be logged in");
