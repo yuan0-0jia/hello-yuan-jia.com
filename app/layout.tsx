@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Footer } from "./_components/Footer";
+import ConditionalFooter from "./_components/ConditionalFooter";
 import NavBar from "./_components/NavBar";
 import { ThemeProviders } from "./_components/ThemeProvider";
 import "./globals.css";
@@ -27,7 +27,7 @@ export default function RootLayout({
         <ThemeProviders>
           <NavBar />
           {children}
-          <Footer />
+          <ConditionalFooter />
         </ThemeProviders>
       </body>
     </html>
