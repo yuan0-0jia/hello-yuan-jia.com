@@ -52,10 +52,10 @@ export default function DeleteProjectButton({
     <button
       type="button"
       onClick={() => setShowConfirm(true)}
-      className="absolute top-2 left-2 w-7 h-7 flex items-center justify-center rounded-full bg-stone-200 dark:bg-zinc-800 text-stone-600 dark:text-stone-300 hover:bg-red-100 dark:hover:bg-red-900 hover:text-red-600 dark:hover:text-red-400 transition-colors z-10"
+      className="absolute top-3 left-3 text-stone-500 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-400 transition-colors z-10"
       aria-label="Delete project"
     >
-      <FaXmark className="w-4 h-4" />
+      <FaXmark className="w-5 h-5" />
     </button>
   );
 }
