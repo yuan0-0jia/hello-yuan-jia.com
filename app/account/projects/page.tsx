@@ -5,6 +5,8 @@ import { getProjects } from "../../_lib/data-service";
 import Image from "next/image";
 import { Suspense } from "react";
 import Spinner from "../../_components/Spinner";
+import AddProjectModal from "../../_components/AddProjectModal";
+import DeleteProjectButton from "../../_components/DeleteProjectButton";
 
 export const metadata = {
   title: "Projects Setting",
@@ -28,8 +30,9 @@ async function ProjectsList() {
       {projects.map((project) => (
         <div
           key={project.id}
-          className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8"
+          className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8 relative"
         >
+          <DeleteProjectButton projectId={project.id} />
           <form action={updateProject} className="space-y-6">
             <input type="hidden" name="id" value={project.id} />
             <input
@@ -82,12 +85,16 @@ async function ProjectsList() {
                     Project Link
                   </label>
                   <input
-                    type="url"
+                    type="text"
                     id={`to-${project.id}`}
                     name="to"
                     defaultValue={project.to}
                     className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                    placeholder="https://example.com or /internal-path"
                   />
+                  <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+                    External URL (https://...) or internal path (/...)
+                  </p>
                 </div>
 
                 <div>
@@ -154,11 +161,14 @@ export default async function Page() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="space-y-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-2">Projects Management</h1>
-          <p className="text-stone-500 dark:text-stone-300">
-            Manage your portfolio projects
-          </p>
+        <div className="flex justify-between items-center">
+          <div className="text-center flex-1">
+            <h1 className="text-3xl font-semibold mb-2">Projects Management</h1>
+            <p className="text-stone-500 dark:text-stone-300">
+              Manage your portfolio projects
+            </p>
+          </div>
+          <AddProjectModal />
         </div>
 
         <Suspense
