@@ -186,8 +186,8 @@ export async function createProject(formData: FormData) {
 
   let imagePath: string | null = null;
 
-  // Handle image upload if an image is provided
-  if (image instanceof File) {
+  // Handle image upload if an image is provided and has content
+  if (image instanceof File && image.size > 0) {
     const imageName = image.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
@@ -207,24 +207,20 @@ export async function createProject(formData: FormData) {
     imagePath = hasImagePath ? newImagePath : imageName;
   }
 
-  // Create the project
+  // Create the project with thumbnail as null if no image provided
   const insertData: {
     project: string;
     desc: string;
     to: string;
     button: string;
-    thumbnail?: string;
+    thumbnail: string | null;
   } = {
     project,
     desc,
     to,
     button,
+    thumbnail: imagePath,
   };
-
-  // Include thumbnail if an image was provided
-  if (imagePath) {
-    insertData.thumbnail = imagePath;
-  }
 
   const { error: insertError } = await supabase
     .from("projects")
@@ -333,12 +329,9 @@ export async function updateAbout(formData: FormData) {
   const supabase = await createClient();
 
   let imagePath = formData.get("currentImage") as string | null;
-  if (!imagePath) {
-    throw new Error("Current image path is required");
-  }
 
-  // Handle image upload if a new image is provided
-  if (photo instanceof File) {
+  // Handle image upload if a new image is provided and has content
+  if (photo instanceof File && photo.size > 0) {
     const imageName = photo.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
@@ -370,6 +363,94 @@ export async function updateAbout(formData: FormData) {
   if (updateError) {
     console.error(updateError);
     throw new Error("About section could not be updated");
+  }
+
+  revalidatePath("/", "layout");
+}
+
+export async function createParagraph(formData: FormData) {
+  const { data, error } = await getUser();
+  if (error || !data?.user) throw new Error("You must be logged in");
+
+  const desc = formData.get("desc") as string;
+  const photo = formData.get("photo") as File | null;
+
+  if (!desc) {
+    throw new Error("Description is required");
+  }
+
+  const supabase = await createClient();
+
+  let imagePath: string | null = null;
+
+  // Handle image upload if an image is provided and has content
+  if (photo instanceof File && photo.size > 0) {
+    const imageName = photo.name.replaceAll("/", "");
+    const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
+    const hasImagePath = newImagePath.startsWith(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!
+    );
+
+    // Upload the image
+    const { error: storageError } = await supabase.storage
+      .from("photos")
+      .upload(imageName, photo, { upsert: true });
+
+    if (storageError) {
+      console.error(storageError);
+      throw new Error("Paragraph image could not be uploaded");
+    }
+
+    imagePath = hasImagePath ? newImagePath : imageName;
+  }
+
+  // Create the paragraph with photo as null if no image provided
+  const insertData: {
+    desc: string;
+    photo: string | null;
+  } = {
+    desc,
+    photo: imagePath,
+  };
+
+  const { error: insertError } = await supabase
+    .from("about")
+    .insert(insertData);
+
+  if (insertError) {
+    console.error(insertError);
+    throw new Error("Paragraph could not be created");
+  }
+
+  revalidatePath("/", "layout");
+}
+
+export async function deleteParagraph(formData: FormData) {
+  const { data, error } = await getUser();
+  if (error || !data?.user) throw new Error("You must be logged in");
+
+  const id = formData.get("id") as string;
+
+  if (!id) {
+    throw new Error("Paragraph ID is required");
+  }
+
+  // Don't allow deleting the header (id 0)
+  if (id === "0") {
+    throw new Error("Cannot delete the header section");
+  }
+
+  const supabase = await createClient();
+
+  // Delete the paragraph
+  const { error: deleteError } = await supabase
+    .from("about")
+    .delete()
+    .eq("id", id);
+
+  if (deleteError) {
+    console.error(deleteError);
+    throw new Error("Paragraph could not be deleted");
   }
 
   revalidatePath("/", "layout");
