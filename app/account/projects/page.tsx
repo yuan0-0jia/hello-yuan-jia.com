@@ -114,20 +114,21 @@ async function ProjectsList() {
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div>
+              <div className="space-y-4 flex items-start justify-center">
+                <div className="space-y-2 w-full max-w-md">
                   <label
                     htmlFor={`thumbnail-${project.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                    className="block text-sm font-medium text-stone-700 dark:text-stone-200"
                   >
                     Project Image
                   </label>
-                  <div className="relative h-48 w-full mb-4">
+                  <div className="relative w-full flex justify-center bg-stone-200 dark:bg-zinc-800 rounded-md p-2 overflow-hidden">
                     <Image
                       alt={project.project}
                       src={project.thumbnail}
-                      fill
-                      className="object-cover rounded-md"
+                      width={400}
+                      height={300}
+                      className="h-auto max-h-48 object-contain rounded-md"
                     />
                   </div>
                   <input

@@ -5,6 +5,8 @@ import { getAbout } from "../../_lib/data-service";
 import Image from "next/image";
 import { Suspense } from "react";
 import Spinner from "../../_components/Spinner";
+import AddParagraphModal from "../../_components/AddParagraphModal";
+import DeleteParagraphButton from "../../_components/DeleteParagraphButton";
 
 export const metadata = {
   title: "About Management",
@@ -29,165 +31,161 @@ async function AboutForm() {
     .sort((a, b) => a.id - b.id);
 
   return (
-    <div className="space-y-6">
+    <div className="grid gap-8">
       {/* Header Section */}
       {header && (
-        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-6">
-          <h2 className="text-lg font-medium mb-4">Header Section</h2>
-          <form action={updateAbout} id="form-header" className="space-y-4">
+        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-medium">Header Section</h2>
+            <span className="text-xs text-stone-400 dark:text-stone-500 bg-stone-200 dark:bg-zinc-800 px-2 py-1 rounded">
+              ID: {header.id}
+            </span>
+          </div>
+          <form action={updateAbout} className="space-y-6">
             <input type="hidden" name="id" value={header.id} />
-            <input type="hidden" name="currentImage" value={header.photo} />
+            <input
+              type="hidden"
+              name="currentImage"
+              value={header.photo || ""}
+            />
             <input type="hidden" name="desc" value={header.desc} />
-            <div className="flex items-center gap-4">
-              <div className="relative h-24 w-24 flex-shrink-0">
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-center justify-center">
                 {header.photo ? (
-                  <Image
-                    alt="Header preview"
-                    src={header.photo}
-                    fill
-                    className="object-cover rounded-md"
-                  />
+                  <div className="relative w-full max-w-[200px] overflow-hidden rounded-lg bg-stone-200 dark:bg-zinc-800 p-2 flex justify-center">
+                    <Image
+                      alt="Header preview"
+                      src={header.photo}
+                      width={200}
+                      height={200}
+                      className="h-auto max-h-48 object-contain rounded-lg"
+                    />
+                  </div>
                 ) : (
-                  <div className="h-full w-full flex items-center justify-center text-stone-400 dark:text-stone-500">
-                    /
+                  <div className="h-40 w-40 flex items-center justify-center text-stone-400 dark:text-stone-500 border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-lg">
+                    No Image
                   </div>
                 )}
               </div>
-              <div className="flex items-center space-x-4">
-                <input
-                  type="file"
-                  name="photo"
-                  accept="image/*"
-                  className="hidden"
-                  id="photo-header"
-                />
-                <label
-                  htmlFor="photo-header"
-                  className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
-                >
-                  Change Image
-                </label>
-                <SubmitButton form="form-header" pendingLabel="Updating...">
-                  Update Header
-                </SubmitButton>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label
+                    htmlFor="photo-header"
+                    className="block text-sm font-medium text-stone-700 dark:text-stone-200"
+                  >
+                    Header Image
+                  </label>
+                  <input
+                    type="file"
+                    name="photo"
+                    accept="image/*"
+                    id="photo-header"
+                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-stone-900 dark:file:text-stone-100 file:text-sm file:font-medium placeholder:text-stone-400 dark:placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500"
+                  />
+                  <p className="text-xs text-stone-500 dark:text-stone-400">
+                    This image appears at the top of your About page
+                  </p>
+                </div>
               </div>
             </div>
-            <div
-              id="error-header"
-              className="text-red-500 text-sm hidden"
-            ></div>
+
+            <div className="flex justify-end">
+              <SubmitButton>Update Header</SubmitButton>
+            </div>
           </form>
         </div>
       )}
 
-      {/* Other Sections */}
-      <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm overflow-hidden">
-        <table className="min-w-full divide-y divide-stone-200 dark:divide-stone-700">
-          <thead className="bg-stone-50 dark:bg-zinc-800">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
-              >
-                ID
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
-              >
-                Preview
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
-              >
-                Content
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white dark:bg-zinc-900 divide-y divide-stone-200 dark:divide-stone-700">
-            {sections.map((section) => (
-              <tr key={section.id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500 dark:text-stone-400">
-                  {section.id}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="relative h-16 w-16">
-                    {section.photo ? (
+      {/* Paragraph Sections */}
+      {sections.map((section) => (
+        <div
+          key={section.id}
+          className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8"
+        >
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <DeleteParagraphButton paragraphId={section.id.toString()} />
+              <h2 className="text-lg font-medium">Paragraph {section.id}</h2>
+            </div>
+            <span className="text-xs text-stone-400 dark:text-stone-500 bg-stone-200 dark:bg-zinc-800 px-2 py-1 rounded">
+              ID: {section.id}
+            </span>
+          </div>
+
+          <form action={updateAbout} className="space-y-6">
+            <input type="hidden" name="id" value={section.id} />
+            <input
+              type="hidden"
+              name="currentImage"
+              value={section.photo || ""}
+            />
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div>
+                  <label
+                    htmlFor={`desc-${section.id}`}
+                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                  >
+                    Paragraph Content
+                  </label>
+                  <textarea
+                    id={`desc-${section.id}`}
+                    name="desc"
+                    defaultValue={section.desc}
+                    required
+                    rows={8}
+                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <label
+                    htmlFor={`photo-${section.id}`}
+                    className="block text-sm font-medium text-stone-700 dark:text-stone-200"
+                  >
+                    Paragraph Image
+                  </label>
+                  {section.photo ? (
+                    <div className="relative w-full overflow-hidden rounded-md bg-stone-200 dark:bg-zinc-800 p-2 flex justify-center">
                       <Image
-                        alt="Section preview"
+                        alt={`Paragraph ${section.id}`}
                         src={section.photo}
-                        fill
-                        className="object-cover rounded-md"
-                      />
-                    ) : (
-                      <div className="h-full w-full flex items-center justify-center text-stone-400 dark:text-stone-500">
-                        /
-                      </div>
-                    )}
-                  </div>
-                </td>
-                <td className="px-6 py-4">
-                  <form
-                    action={updateAbout}
-                    id={`form-${section.id}`}
-                    className="space-y-4"
-                  >
-                    <input type="hidden" name="id" value={section.id} />
-                    <input
-                      type="hidden"
-                      name="currentImage"
-                      value={section.photo}
-                    />
-                    <div className="space-y-2">
-                      <textarea
-                        name="desc"
-                        defaultValue={section.desc}
-                        required
-                        rows={3}
-                        className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                        width={400}
+                        height={300}
+                        className="h-auto max-h-48 object-contain rounded-md"
                       />
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <input
-                        type="file"
-                        name="photo"
-                        accept="image/*"
-                        className="hidden"
-                        id={`photo-${section.id}`}
-                      />
-                      <label
-                        htmlFor={`photo-${section.id}`}
-                        className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
-                      >
-                        Change Image
-                      </label>
+                  ) : (
+                    <div className="relative h-40 w-full flex items-center justify-center text-stone-400 dark:text-stone-500 border-2 border-dashed border-stone-300 dark:border-stone-600 rounded-md">
+                      No Image
                     </div>
-                    <div
-                      id={`error-${section.id}`}
-                      className="text-red-500 text-sm hidden"
-                    ></div>
-                  </form>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <SubmitButton
-                    form={`form-${section.id}`}
-                    pendingLabel="Updating..."
-                  >
-                    Update
-                  </SubmitButton>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  )}
+                  <input
+                    type="file"
+                    id={`photo-${section.id}`}
+                    name="photo"
+                    accept="image/*"
+                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-stone-900 dark:file:text-stone-100 file:text-sm file:font-medium placeholder:text-stone-400 dark:placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500"
+                  />
+                  <p className="text-xs text-stone-500 dark:text-stone-400">
+                    Optional: Images appear beside paragraphs (alternating
+                    sides)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <SubmitButton>Update Paragraph</SubmitButton>
+            </div>
+          </form>
+        </div>
+      ))}
     </div>
   );
 }
@@ -202,13 +200,16 @@ export default async function Page() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="space-y-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-2">
-            About Section Management
-          </h1>
-          <p className="text-stone-500 dark:text-stone-300">
-            Manage your about section content
-          </p>
+        <div className="flex justify-between items-center">
+          <div className="text-center flex-1">
+            <h1 className="text-3xl font-semibold mb-2">
+              About Section Management
+            </h1>
+            <p className="text-stone-500 dark:text-stone-300">
+              Manage your about section content
+            </p>
+          </div>
+          <AddParagraphModal />
         </div>
 
         <Suspense
