@@ -265,19 +265,18 @@ export async function updatePhoto(formData: FormData) {
   if (error || !data?.user) throw new Error("You must be logged in");
 
   const id = formData.get("id") as string;
-  const title = formData.get("title") as string;
   const image = formData.get("image") as File | null;
 
-  if (!id || !title) {
-    throw new Error("Required fields are missing");
+  if (!id) {
+    throw new Error("Photo ID is required");
   }
 
   const supabase = await createClient();
 
   let imagePath = formData.get("currentImage") as string;
 
-  // Handle image upload if a new image is provided
-  if (image instanceof File) {
+  // Handle image upload if a new image is provided and has content
+  if (image instanceof File && image.size > 0) {
     const imageName = image.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
@@ -300,10 +299,7 @@ export async function updatePhoto(formData: FormData) {
   // Update the photo
   const { error: updateError } = await supabase
     .from("photos")
-    .update({
-      title,
-      image: imagePath,
-    })
+    .update({ image: imagePath })
     .eq("id", id);
 
   if (updateError) {
@@ -381,6 +377,24 @@ export async function createParagraph(formData: FormData) {
 
   const supabase = await createClient();
 
+  // Get the maximum existing ID to assign the next sequential ID
+  const { data: existingParagraphs, error: fetchError } = await supabase
+    .from("about")
+    .select("id")
+    .order("id", { ascending: false })
+    .limit(1);
+
+  if (fetchError) {
+    console.error(fetchError);
+    throw new Error("Could not fetch existing paragraphs");
+  }
+
+  // Calculate next ID (max ID + 1, or 1 if no paragraphs exist)
+  const nextId =
+    existingParagraphs && existingParagraphs.length > 0
+      ? existingParagraphs[0].id + 1
+      : 1;
+
   let imagePath: string | null = null;
 
   // Handle image upload if an image is provided and has content
@@ -404,11 +418,13 @@ export async function createParagraph(formData: FormData) {
     imagePath = hasImagePath ? newImagePath : imageName;
   }
 
-  // Create the paragraph with photo as null if no image provided
+  // Create the paragraph with the next sequential ID
   const insertData: {
+    id: number;
     desc: string;
     photo: string | null;
   } = {
+    id: nextId,
     desc,
     photo: imagePath,
   };
