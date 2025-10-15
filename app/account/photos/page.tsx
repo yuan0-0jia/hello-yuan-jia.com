@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
-import { getUser, updatePhoto } from "../../_lib/auth-action";
-import SubmitButton from "../../_components/SubmitButton";
+import { getUser } from "../../_lib/auth-action";
 import { getPhotos } from "../../_lib/data-service";
-import Image from "next/image";
 import { Suspense } from "react";
 import Spinner from "../../_components/Spinner";
+import PhotoGridItem from "../../_components/PhotoGridItem";
 
 export const metadata = {
   title: "Photos Management",
@@ -25,116 +24,38 @@ async function PhotosList() {
 
   // Separate header photo (id=0) from other photos
   const headerPhoto = photos.find((photo) => photo.id === 0);
-  const otherPhotos = photos.filter((photo) => photo.id !== 0);
+  const otherPhotos = photos
+    .filter((photo) => photo.id !== 0)
+    .sort((cur, next) => cur.id - next.id);
 
   return (
     <div className="space-y-6">
       {/* Header Photo Section */}
       {headerPhoto && (
-        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-6">
-          <h2 className="text-lg font-medium mb-4">Header Photo</h2>
-          <form action={updatePhoto} className="space-y-4">
-            <input type="hidden" name="id" value={headerPhoto.id} />
-            <input
-              type="hidden"
-              name="currentImage"
-              value={headerPhoto.image}
-            />
-            <div className="flex items-center gap-4">
-              <div className="relative h-24 w-24 flex-shrink-0">
-                <Image
-                  alt="Header Photo"
-                  src={headerPhoto.image}
-                  fill
-                  className="object-cover rounded-md"
-                />
-              </div>
-              <div className="flex items-center gap-4">
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  className="hidden"
-                  id="header-image"
-                />
-                <label
-                  htmlFor="header-image"
-                  className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100"
-                >
-                  Change Header Image
-                </label>
-                <SubmitButton>Update Header</SubmitButton>
-              </div>
+        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8">
+          <h2 className="text-lg font-medium mb-4 text-center">Header Photo</h2>
+          <div className="flex justify-center">
+            <div className="w-full max-w-sm">
+              <PhotoGridItem photo={headerPhoto} />
             </div>
-          </form>
+          </div>
+          <p className="text-xs text-stone-500 dark:text-stone-400 text-center mt-4">
+            Hover over the image to update
+          </p>
         </div>
       )}
 
-      {/* Other Photos Table */}
-      <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm overflow-hidden">
-        <table className="min-w-full divide-y divide-stone-200 dark:divide-stone-700">
-          <thead className="bg-stone-50 dark:bg-zinc-800">
-            <tr>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
-              >
-                Preview
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-right text-xs font-medium text-stone-500 dark:text-stone-300 uppercase tracking-wider"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white dark:bg-zinc-900 divide-y divide-stone-200 dark:divide-stone-700">
-            {otherPhotos.map((photo) => (
-              <tr key={photo.id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="relative h-16 w-16">
-                    <Image
-                      alt="Photo preview"
-                      src={photo.image}
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <form action={updatePhoto} id={`form-${photo.id}`}>
-                    <input type="hidden" name="id" value={photo.id} />
-                    <input
-                      type="hidden"
-                      name="currentImage"
-                      value={photo.image}
-                    />
-                    <input
-                      type="file"
-                      name="image"
-                      accept="image/*"
-                      className="hidden"
-                      id={`photo-${photo.id}`}
-                    />
-                    <label
-                      htmlFor={`photo-${photo.id}`}
-                      className="cursor-pointer text-sm text-stone-500 dark:text-stone-300 hover:text-stone-700 dark:hover:text-stone-100 mr-4"
-                    >
-                      Change Image
-                    </label>
-                    <SubmitButton
-                      form={`form-${photo.id}`}
-                      pendingLabel="Updating..."
-                    >
-                      Update
-                    </SubmitButton>
-                  </form>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Photo Grid */}
+      <div className="space-y-4">
+        <h2 className="text-lg font-medium text-center">Gallery Photos</h2>
+        <div className="grid grid-cols-3 gap-8">
+          {otherPhotos.map((photo) => (
+            <PhotoGridItem key={photo.id} photo={photo} />
+          ))}
+        </div>
+        <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+          Hover over any image to update
+        </p>
       </div>
     </div>
   );
@@ -148,12 +69,12 @@ export default async function Page() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-semibold mb-2">Photos Management</h1>
           <p className="text-stone-500 dark:text-stone-300">
-            Manage your portfolio photos
+            Hover over any photo to update it
           </p>
         </div>
 

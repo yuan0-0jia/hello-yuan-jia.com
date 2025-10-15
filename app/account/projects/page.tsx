@@ -2,11 +2,11 @@ import { redirect } from "next/navigation";
 import { getUser, updateProject } from "../../_lib/auth-action";
 import SubmitButton from "../../_components/SubmitButton";
 import { getProjects } from "../../_lib/data-service";
-import Image from "next/image";
 import { Suspense } from "react";
 import Spinner from "../../_components/Spinner";
 import AddProjectModal from "../../_components/AddProjectModal";
 import DeleteProjectButton from "../../_components/DeleteProjectButton";
+import ProjectImageItem from "../../_components/ProjectImageItem";
 
 export const metadata = {
   title: "Projects Setting",
@@ -116,28 +116,13 @@ async function ProjectsList() {
 
               <div className="space-y-4 flex items-start justify-center">
                 <div className="space-y-2 w-full max-w-md">
-                  <label
-                    htmlFor={`thumbnail-${project.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200"
-                  >
+                  <label className="block text-sm font-medium text-stone-700 dark:text-stone-200">
                     Project Image
                   </label>
-                  <div className="relative w-full flex justify-center bg-stone-200 dark:bg-zinc-800 rounded-md p-2 overflow-hidden">
-                    <Image
-                      alt={project.project}
-                      src={project.thumbnail}
-                      width={400}
-                      height={300}
-                      className="h-auto max-h-48 object-contain rounded-md"
-                    />
-                  </div>
-                  <input
-                    type="file"
-                    id={`thumbnail-${project.id}`}
-                    name="thumbnail"
-                    accept="image/*"
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-stone-900 dark:file:text-stone-100 file:text-sm file:font-medium placeholder:text-stone-400 dark:placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500"
-                  />
+                  <ProjectImageItem project={project} />
+                  <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+                    Hover over image to update
+                  </p>
                 </div>
               </div>
             </div>

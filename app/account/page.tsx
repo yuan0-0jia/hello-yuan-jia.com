@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
-import { getUser, updateAva } from "../_lib/auth-action";
-import SubmitButton from "../_components/SubmitButton";
+import { getUser } from "../_lib/auth-action";
 import { getAvatar } from "../_lib/data-service";
-import Image from "next/image";
+import AvatarImageItem from "../_components/AvatarImageItem";
 
 export const metadata = {
   title: "Account",
@@ -16,6 +15,11 @@ export default async function Page() {
   }
 
   const avatar = await getAvatar();
+  const avatarData = avatar?.find((photo) => photo.id === 1);
+
+  if (!avatarData) {
+    return <div>Avatar not found</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -32,38 +36,12 @@ export default async function Page() {
             <h2 className="text-lg font-medium mb-4 text-center">
               Profile Photo
             </h2>
-            <form action={updateAva} className="space-y-4">
-              <div className="flex flex-col items-center gap-4">
-                <div className="relative h-40 w-40 aspect-square">
-                  <Image
-                    alt="Profile"
-                    src={avatar?.find((photo) => photo.id === 1).image}
-                    fill
-                    priority={true}
-                    quality={75}
-                    sizes="160px"
-                    className="object-cover rounded-full"
-                  />
-                </div>
-                <div className="w-full space-y-4">
-                  <input
-                    type="hidden"
-                    value={avatar?.find((entry) => entry.id === 1).id}
-                    name="id"
-                  />
-                  <input
-                    type="file"
-                    name="image"
-                    required
-                    accept="image/*"
-                    className="w-full flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-foreground file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                  />
-                  <div className="flex justify-center">
-                    <SubmitButton>Update Profile Photo</SubmitButton>
-                  </div>
-                </div>
-              </div>
-            </form>
+            <div className="flex flex-col items-center gap-4">
+              <AvatarImageItem avatar={avatarData} />
+              <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+                Hover over the image to update
+              </p>
+            </div>
           </div>
         </div>
       </div>
