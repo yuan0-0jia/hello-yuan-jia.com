@@ -37,5 +37,5 @@ export async function GET(request: Request) {
   }
 
   // If code is missing or session exchange failed, redirect to error page
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(`${origin}/error?error=auth_code_error`);
 }
