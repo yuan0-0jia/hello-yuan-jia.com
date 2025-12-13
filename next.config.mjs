@@ -10,6 +10,11 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "5mb", // Increased from default 1mb to allow image uploads
+    },
+  },
   distDir: "_next",
   generateBuildId: async () => {
     if (process.env.BUILD_ID) {

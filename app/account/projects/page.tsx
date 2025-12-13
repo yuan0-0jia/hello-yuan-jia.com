@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import Spinner from "../../_components/Spinner";
 import AddProjectModal from "../../_components/AddProjectModal";
 import DeleteProjectButton from "../../_components/DeleteProjectButton";
-import ProjectImageItem from "../../_components/ProjectImageItem";
+import ProjectImageInput from "../../_components/ProjectImageInput";
 
 export const metadata = {
   title: "Projects Setting",
@@ -38,7 +38,7 @@ async function ProjectsList() {
             <input
               type="hidden"
               name="currentImage"
-              value={project.thumbnail}
+              value={project.thumbnail || ""}
             />
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -114,16 +114,12 @@ async function ProjectsList() {
                 </div>
               </div>
 
-              <div className="space-y-4 flex items-start justify-center">
-                <div className="space-y-2 w-full max-w-md">
-                  <label className="block text-sm font-medium text-stone-700 dark:text-stone-200">
-                    Project Image
-                  </label>
-                  <ProjectImageItem project={project} />
-                  <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
-                    Hover over image to update
-                  </p>
-                </div>
+              <div className="space-y-4">
+                <ProjectImageInput
+                  currentThumbnail={project.thumbnail}
+                  projectName={project.project}
+                  projectId={project.id}
+                />
               </div>
             </div>
 

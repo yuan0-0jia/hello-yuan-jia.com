@@ -111,12 +111,9 @@ export async function updateProject(formData: FormData) {
   const supabase = await createClient();
 
   let imagePath = formData.get("currentImage") as string | null;
-  if (!imagePath) {
-    throw new Error("Current image path is required");
-  }
 
   // Handle image upload if a new image is provided
-  if (image instanceof File) {
+  if (image instanceof File && image.size > 0) {
     const imageName = image.name.replaceAll("/", "");
     const newImagePath = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/photos/${imageName}`;
     const hasImagePath = newImagePath.startsWith(
@@ -165,7 +162,9 @@ export async function updateProject(formData: FormData) {
     throw new Error("Project could not be updated");
   }
 
+  revalidatePath("/account/projects", "page");
   revalidatePath("/", "layout");
+  redirect("/account/projects");
 }
 
 export async function createProject(formData: FormData) {

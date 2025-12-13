@@ -35,13 +35,21 @@ export default function Project({
       </div>
 
       <div className="relative w-96 h-64 my-5 max-w-md">
-        <Image
-          alt={header}
-          fill
-          sizes="800x500"
-          className="rounded-xl drop-shadow-2xl"
-          src={image}
-        />
+        {image ? (
+          <Image
+            alt={header}
+            fill
+            sizes="800x500"
+            className="rounded-xl drop-shadow-2xl object-cover"
+            src={image}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-stone-200 dark:bg-zinc-800 rounded-xl">
+            <span className="text-stone-400 dark:text-stone-500">
+              No image available
+            </span>
+          </div>
+        )}
       </div>
     </section>
   );

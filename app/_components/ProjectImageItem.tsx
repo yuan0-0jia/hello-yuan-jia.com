@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { updateProject } from "../_lib/auth-action";
 import { FaUpload } from "react-icons/fa6";
 import SpinnerMini from "./SpinnerMini";
@@ -13,18 +14,26 @@ interface ProjectImageItemProps {
     desc: string;
     to: string;
     button: string;
-    thumbnail: string;
+    thumbnail: string | null;
   };
 }
 
 export default function ProjectImageItem({ project }: ProjectImageItemProps) {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("File input changed");
     const file = e.target.files?.[0];
-    if (!file) return;
+    console.log("Selected file:", file?.name, file?.size);
 
+    if (!file) {
+      console.log("No file selected");
+      return;
+    }
+
+    console.log("Starting upload...");
     setIsUploading(true);
     try {
       const formData = new FormData();
@@ -34,15 +43,28 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
       formData.append("to", project.to);
       formData.append("button", project.button);
       formData.append("image", file);
-      formData.append("currentImage", project.thumbnail);
+      formData.append("currentImage", project.thumbnail || "");
 
+      console.log("Calling updateProject...");
       await updateProject(formData);
+      console.log("Upload successful!");
+
+      // Success - refresh to show updated image
+      router.refresh();
     } catch (error) {
       console.error("Error updating project image:", error);
+      alert(
+        `Failed to update image: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`
+      );
     } finally {
       setIsUploading(false);
     }
   };
+
+  // Fallback placeholder image if thumbnail is missing
+  const imageSrc = project.thumbnail || "/placeholder-project.png";
 
   return (
     <div
@@ -50,13 +72,21 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Image
-        alt={project.project}
-        src={project.thumbnail}
-        width={400}
-        height={300}
-        className="w-full h-auto max-h-48 object-contain rounded-md"
-      />
+      {project.thumbnail ? (
+        <Image
+          alt={project.project}
+          src={project.thumbnail}
+          width={400}
+          height={300}
+          className="w-full h-auto max-h-48 object-contain rounded-md"
+        />
+      ) : (
+        <div className="w-full h-48 flex items-center justify-center bg-stone-300 dark:bg-zinc-700 rounded-md">
+          <span className="text-stone-500 dark:text-stone-400 text-sm">
+            No image
+          </span>
+        </div>
+      )}
 
       {/* Hover Overlay */}
       {(isHovered || isUploading) && (
@@ -71,7 +101,9 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
               className="cursor-pointer flex flex-col items-center gap-2 text-white hover:text-stone-200 transition-colors"
             >
               <FaUpload className="w-6 h-6" />
-              <span className="text-xs font-medium">Update Image</span>
+              <span className="text-xs font-medium">
+                {project.thumbnail ? "Update Image" : "Upload Image"}
+              </span>
               <input
                 id={`project-image-${project.id}`}
                 type="file"
