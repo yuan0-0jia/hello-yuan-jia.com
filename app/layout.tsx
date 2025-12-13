@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ConditionalFooter from "./_components/ConditionalFooter";
 import NavBar from "./_components/NavBar";
 import { ThemeProviders } from "./_components/ThemeProvider";
@@ -29,6 +30,7 @@ export default function RootLayout({
           {children}
           <ConditionalFooter />
         </ThemeProviders>
+        <SpeedInsights />
       </body>
     </html>
   );
