@@ -5,6 +5,8 @@ import Projects from "./_components/Projects";
 import Spinner from "./_components/Spinner";
 import { getAvatar } from "./_lib/data-service";
 
+export const revalidate = 3600;
+
 export default async function Home() {
   const avatar = await getAvatar();
 

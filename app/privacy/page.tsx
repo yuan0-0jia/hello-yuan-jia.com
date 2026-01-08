@@ -2,6 +2,8 @@ export const metadata = {
   title: "Privacy",
 };
 
+export const dynamic = "force-static";
+
 export default async function Page() {
   return (
     <div className="m-20 flex flex-col items-center justify-center p-4 tracking-wide">

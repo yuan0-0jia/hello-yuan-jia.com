@@ -21,7 +21,7 @@ export default function Header({
       </header>
 
       <div className="relative h-[700px] w-full mb-5">
-        <Image alt="" src={img} fill className="rounded-xl" />
+        <Image alt="" src={img} fill sizes="100vw" className="rounded-xl" />
       </div>
     </>
   );

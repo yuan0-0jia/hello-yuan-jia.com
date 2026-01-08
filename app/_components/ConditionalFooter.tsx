@@ -1,13 +1,12 @@
-"use client";
-
-import { usePathname } from "next/navigation";
+import { headers } from "next/headers";
 import { Footer } from "./Footer";
 
-export default function ConditionalFooter() {
-  const pathname = usePathname();
+export default async function ConditionalFooter() {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
 
   // Hide footer on account pages
-  if (pathname?.startsWith("/account")) {
+  if (pathname.startsWith("/account")) {
     return null;
   }
 

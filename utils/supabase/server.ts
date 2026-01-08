@@ -1,5 +1,3 @@
-"use server";
-
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
@@ -26,6 +24,25 @@ export async function createClient() {
             // This can be ignored if you have middleware refreshing
             // user sessions.
           }
+        },
+      },
+    }
+  );
+}
+
+// Anonymous client for public data fetching (no cookies required)
+// Use this inside unstable_cache() or other cached contexts
+export function createAnonClient() {
+  return createServerClient<any, "public">(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return [];
+        },
+        setAll() {
+          // No-op for anonymous client
         },
       },
     }
