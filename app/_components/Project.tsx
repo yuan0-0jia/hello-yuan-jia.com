@@ -18,34 +18,39 @@ export default function Project({
 }) {
   return (
     <section
-      className={`flex ${
-        reverse ? "flex-row-reverse" : "flex-row"
-      } mx-20 my-10 justify-center gap-8`}
+      className={`flex flex-col ${
+        reverse ? "md:flex-row-reverse" : "md:flex-row"
+      } mx-4 md:mx-12 lg:mx-20 my-8 md:my-12 justify-center items-center gap-6 md:gap-10 lg:gap-14 max-w-6xl lg:mx-auto card-hover p-6 md:p-8 bg-cream/50 dark:bg-warmGray-800/30 vintage-border rounded-sm`}
     >
-      <div className="max-w-md">
-        <header className="before:h-1px mx-5 text-2xl font-extralight before:my-4 before:block before:w-10  before:border-t before:border-slate-500 before:opacity-35">
-          {header}
+      {/* Content */}
+      <div className="max-w-md text-center md:text-left">
+        <header className="relative">
+          <div className="w-12 h-px bg-sepia-300 dark:bg-sepia-600 mb-4 mx-auto md:mx-0" />
+          <h3 className="font-typewriter text-xl md:text-2xl text-warmGray-800 dark:text-cream tracking-wide">
+            {header}
+          </h3>
         </header>
-        <p className="m-5 font-extralight">{desc}</p>
-        <div className="m-5">
-          <Button type="secondary" to={to}>
-            {button}
-          </Button>
-        </div>
+        <p className="mt-4 mb-6 font-typewriter text-sm md:text-base text-warmGray-700 dark:text-warmGray-200 leading-loose tracking-wide">
+          {desc}
+        </p>
+        <Button type="secondary" to={to}>
+          {button}
+        </Button>
       </div>
 
-      <div className="relative w-96 h-64 my-5 max-w-md">
+      {/* Image with vintage styling */}
+      <div className="relative w-full md:w-96 h-56 md:h-64 img-vintage rounded-sm overflow-hidden vintage-border">
         {image ? (
           <Image
             alt={header}
             fill
             sizes="(max-width: 768px) 100vw, 384px"
-            className="rounded-xl drop-shadow-2xl object-cover"
+            className="object-cover"
             src={image}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-stone-200 dark:bg-zinc-800 rounded-xl">
-            <span className="text-stone-400 dark:text-stone-500">
+          <div className="w-full h-full flex items-center justify-center bg-parchment dark:bg-warmGray-800">
+            <span className="font-typewriter text-warmGray-400 dark:text-warmGray-500">
               No image available
             </span>
           </div>

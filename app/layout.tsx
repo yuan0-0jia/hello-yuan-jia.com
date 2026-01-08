@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
+import { Special_Elite, Lora } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ConditionalFooter from "./_components/ConditionalFooter";
 import NavBar from "./_components/NavBar";
 import { ThemeProviders } from "./_components/ThemeProvider";
 import "./globals.css";
+
+const specialElite = Special_Elite({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-typewriter",
+  display: "swap",
+});
+
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: { template: "%s - Yuan Jia", default: "Yuan Jia" },
@@ -21,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${specialElite.variable} ${lora.variable}`}>
       <head>
         <link
           rel="preconnect"
@@ -33,7 +48,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`antialiased flex flex-col relative min-h-screen  bg-white dark:bg-black text-slate-700 dark:text-slate-100 transition-colors`}
+        className={`antialiased flex flex-col relative min-h-screen bg-cream dark:bg-warmGray-900 text-warmGray-800 dark:text-cream transition-colors font-serif`}
       >
         <ThemeProviders>
           <NavBar />

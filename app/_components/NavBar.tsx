@@ -2,39 +2,44 @@ import Link from "next/link";
 import { FaRegUser } from "react-icons/fa6";
 import ThemeSwitch from "./ThemeSwitch";
 
-// import { auth } from "../_lib/auth";
-
 export default async function Navigation() {
-  // const session = await auth();
-
   return (
-    <header className="border-b border-stone-200 dark:border-stone-800 px-4 py-3 sticky top-0 z-20 uppercase sm:px-6 bg-[#f7f7f7] dark:bg-zinc-900">
-      <div className="flex justify-between items-center max-w-7xl mx-auto tracking-wider">
+    <header className="border-b border-sepia-200 dark:border-sepia-800 px-4 py-4 sticky top-0 z-20 bg-cream/95 dark:bg-warmGray-900/95 backdrop-blur-sm">
+      <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link
           href="/"
-          className="tracking-widest mx-2 px-5 font-semibold hover:text-gray-400"
+          className="font-typewriter text-lg tracking-wider text-sepia-700 dark:text-sepia-300 hover:text-sepia-500 dark:hover:text-sepia-400 transition-colors"
         >
           Yuan Jia
         </Link>
 
-        <nav className="z-10 text-sm">
-          <ul className="flex gap-6 items-center tracking-wider">
-            <li className="flex flex-col justify-center hover:text-gray-400">
+        <nav className="z-10 font-typewriter text-sm tracking-wider">
+          <ul className="flex gap-6 md:gap-8 items-center">
+            <li>
               <ThemeSwitch />
             </li>
-            <li className="flex flex-col justify-center">
-              <Link href="/about" className="hover:text-gray-400 ">
+            <li>
+              <Link 
+                href="/about" 
+                className="text-sepia-600 dark:text-sepia-400 hover:text-sepia-800 dark:hover:text-sepia-300 transition-colors"
+              >
                 About
               </Link>
             </li>
-            <li className="flex flex-col justify-center">
-              <Link href="/photos" className="hover:text-gray-400 ">
+            <li>
+              <Link 
+                href="/photos" 
+                className="text-sepia-600 dark:text-sepia-400 hover:text-sepia-800 dark:hover:text-sepia-300 transition-colors"
+              >
                 Photos
               </Link>
             </li>
-            <li className="flex flex-col justify-center">
-              <Link href="/account" className="hover:text-gray-400 ">
-                <FaRegUser />
+            <li>
+              <Link 
+                href="/account" 
+                className="text-sepia-600 dark:text-sepia-400 hover:text-sepia-800 dark:hover:text-sepia-300 transition-colors p-2"
+              >
+                <FaRegUser className="w-4 h-4" />
               </Link>
             </li>
           </ul>

@@ -8,8 +8,8 @@ export default function Icon({
   to: string;
 }) {
   return (
-    <Link href={to}>
-      <button className="rounded-full border px-2 py-2 border-zinc-600 hover:bg-zinc-200 text-slate-700 dark:text-slate-100 dark:hover:bg-zinc-500 text-lg">
+    <Link href={to} target="_blank" rel="noopener noreferrer">
+      <button className="rounded-sm border px-3 py-3 border-sepia-300 dark:border-sepia-600 text-warmGray-600 dark:text-warmGray-300 hover:border-sepia-500 hover:text-sepia-600 dark:hover:border-sepia-400 dark:hover:text-sepia-400 hover:bg-sepia-50 dark:hover:bg-sepia-900/30 transition-all duration-300 text-lg">
         {children}
       </button>
     </Link>

@@ -11,17 +11,27 @@ export default function Header({
 }) {
   return (
     <>
-      <header className="pb-3 text-center">
-        <h1 className="before:h-1px text-4xl font-light before:mx-auto before:my-4 before:block before:w-16 before:border-t  before:border-slate-500 before:opacity-35">
+      <header className="pb-6 text-center">
+        <div className="vintage-divider mb-6">
+          <span className="text-sepia-400 dark:text-sepia-500">✦</span>
+        </div>
+        <h1 className="font-typewriter text-3xl md:text-4xl lg:text-5xl text-warmGray-800 dark:text-cream tracking-wide">
           {title}
         </h1>
-        <p className="p-3 text-xl font-extralight text-stone-600 dark:text-stone-300">
-          {sub}
+        <p className="mt-4 font-typewriter text-lg text-sepia-500 dark:text-sepia-400 tracking-wider">
+          — {sub} —
         </p>
       </header>
 
-      <div className="relative h-[700px] w-full mb-5">
-        <Image alt="" src={img} fill sizes="100vw" className="rounded-xl" />
+      <div className="relative h-[500px] md:h-[600px] lg:h-[700px] w-full mb-8 vintage-border rounded-sm overflow-hidden">
+        <Image
+          alt={title}
+          src={img}
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+        />
       </div>
     </>
   );

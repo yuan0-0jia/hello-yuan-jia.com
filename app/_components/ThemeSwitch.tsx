@@ -1,7 +1,7 @@
 "use client";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { CgDarkMode } from "react-icons/cg";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false);
@@ -9,26 +9,28 @@ export default function ThemeSwitch() {
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted)
+  if (!mounted) {
     return (
-      <button>
-        <CgDarkMode />
-      </button>
-    );
-
-  if (resolvedTheme === "dark") {
-    return (
-      <button onClick={() => setTheme("light")}>
-        <CgDarkMode />
+      <button
+        className="p-2 text-warmGray-600 dark:text-warmGray-300"
+        aria-label="Toggle theme"
+      >
+        <FiSun className="w-5 h-5" />
       </button>
     );
   }
 
-  if (resolvedTheme === "light") {
-    return (
-      <button onClick={() => setTheme("dark")}>
-        <CgDarkMode />
-      </button>
-    );
-  }
+  return (
+    <button
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="p-2 text-warmGray-600 dark:text-warmGray-300 hover:text-sepia-600 dark:hover:text-sepia-400 transition-colors"
+      aria-label={`Switch to ${resolvedTheme === "dark" ? "light" : "dark"} mode`}
+    >
+      {resolvedTheme === "dark" ? (
+        <FiMoon className="w-5 h-5" />
+      ) : (
+        <FiSun className="w-5 h-5" />
+      )}
+    </button>
+  );
 }

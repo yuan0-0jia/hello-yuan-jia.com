@@ -1,14 +1,21 @@
 import Link from "next/link";
 
-const base =
-  "inline-block text-sm rounded-full bg-transparent font-semibold uppercase tracking-wide border-2 border-zinc-600 text-zinc-600 dark:border-zinc-300 dark:text-zinc-300 transition-colors duration-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 focus:outline-none focus:ring focus:ring-slate-100 dark:focus:ring-slate-700 focus:ring-offset-2 disabled:cursor-not-allowed";
+const baseStyles =
+  "inline-block font-typewriter text-sm tracking-wider transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sepia-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
 
 const styles = {
-  primary: base + " px-4 py-3 md:px-6 md:py-4",
-  small: base + " px-3 py-1 md:px-4 md:py-1.5 text-xs",
+  primary:
+    baseStyles +
+    " px-6 py-3 md:px-8 md:py-4 bg-sepia-600 text-cream border border-sepia-700 hover:bg-sepia-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0",
+  small:
+    baseStyles +
+    " px-3 py-1.5 md:px-4 md:py-2 text-xs bg-sepia-600 text-cream border border-sepia-700 hover:bg-sepia-700",
   secondary:
-    "inline-block text-sm rounded-full border-2 border-stone-600 dark:border-stone-300 font-semibold uppercase tracking-wide text-stone-600 dark:text-stone-300 transition-colors duration-300 hover:bg-stone-200 dark:hover:bg-stone-700 focus:outline-none focus:ring focus:ring-stone-200 dark:focus:ring-stone-600      focus:ring-offset-2 focus:text-stone-700 disabled:cursor-not-allowed px-4 py-1.5 md:px-5 md:py-2.5",
-  round: base + " px-2.5 py-1 md:px-3.5 md:py-2 text-sm",
+    baseStyles +
+    " px-5 py-2.5 md:px-6 md:py-3 bg-transparent border-2 border-sepia-400 text-sepia-600 dark:text-sepia-300 dark:border-sepia-500 hover:bg-sepia-50 dark:hover:bg-sepia-900/30 hover:-translate-y-0.5 active:translate-y-0",
+  round:
+    baseStyles +
+    " px-4 py-2 md:px-5 md:py-2.5 text-sm bg-transparent border border-sepia-400 text-sepia-600 dark:text-sepia-300 dark:border-sepia-500 hover:bg-sepia-50 dark:hover:bg-sepia-900/30",
 };
 
 export default function Button({
@@ -21,7 +28,7 @@ export default function Button({
   children: string;
   disabled?: boolean;
   type: keyof typeof styles;
-  to: string;
+  to?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   if (to)

@@ -23,19 +23,21 @@ async function PhotosContent() {
         img={photos?.find((photo) => photo.id === 0).image}
       />
 
-      <div className="my-8 grid grid-cols-3 gap-8">
+      <div className="my-10 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {photos
           .filter((photo) => photo.id !== 0)
           .sort((cur, next) => cur.id - next.id)
           .map((photo) => (
-            <div key={photo.id} className="relative aspect-[3/2] w-full h-56">
+            <div 
+              key={photo.id} 
+              className="relative aspect-[3/2] w-full img-vintage vintage-border rounded-sm overflow-hidden"
+            >
               <Image
                 src={photo.image}
                 alt=""
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 300px"
-                className=" rounded-xl object-cover"
-                key={photo.id}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover"
               />
             </div>
           ))}
@@ -45,7 +47,7 @@ async function PhotosContent() {
         Feel free to check out more photos on my{" "}
         <Link
           href="https://www.flickr.com/photos/yuan-jia/"
-          className="underline decoration-dotted decoration-1 underline-offset-4"
+          className="text-sepia-600 dark:text-sepia-400 underline decoration-sepia-400/50 decoration-1 underline-offset-4 hover:decoration-sepia-500 transition-colors"
         >
           flickr.
         </Link>{" "}
@@ -56,8 +58,8 @@ async function PhotosContent() {
 
 export default function Page() {
   return (
-    <div className="m-20 flex flex-col items-center justify-center p-4 tracking-wide">
-      <div className="flex max-w-7xl flex-col items-center justify-center">
+    <div className="mx-4 md:mx-12 lg:mx-20 my-12 md:my-20 flex flex-col items-center justify-center p-4 tracking-wide">
+      <div className="flex max-w-7xl w-full flex-col items-center justify-center">
         <Suspense
           fallback={
             <div className="py-20">

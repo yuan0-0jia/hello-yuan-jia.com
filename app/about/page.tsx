@@ -22,7 +22,7 @@ async function AboutContent() {
         img={about?.find((photo) => photo.id === 0).photo}
       />
 
-      <div>
+      <div className="space-y-2">
         {about
           ?.filter((entry) => entry.id !== 0)
           .sort((cur, next) => cur.id - next.id)
@@ -38,11 +38,11 @@ async function AboutContent() {
 
         <Paragraph>
           When I&apos;m not writing code, I love exploring Santa Cruz with my
-          camera. You can spot me wandering around, capturing moments that
-          catch my eye. Check out some of my photos on the{" "}
+          camera. You can spot me wandering around, capturing moments that catch
+          my eye. Check out some of my photos on the{" "}
           <Link
             href="/photos"
-            className="underline decoration-dotted decoration-1 underline-offset-4"
+            className="text-sepia-600 dark:text-sepia-400 underline decoration-sepia-400/50 decoration-1 underline-offset-4 hover:decoration-sepia-500 transition-colors"
           >
             Photos
           </Link>{" "}
@@ -55,8 +55,8 @@ async function AboutContent() {
 
 export default function Page() {
   return (
-    <div className="m-20 flex flex-col items-center justify-center p-4 tracking-wide">
-      <div className="flex max-w-7xl flex-col items-center justify-center">
+    <div className="mx-4 md:mx-12 lg:mx-20 my-12 md:my-20 flex flex-col items-center justify-center p-4 tracking-wide">
+      <div className="flex max-w-5xl w-full flex-col items-center justify-center">
         <Suspense
           fallback={
             <div className="py-20">
