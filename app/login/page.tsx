@@ -13,8 +13,8 @@ export default function Login() {
         </div>
         <h1 className="font-typewriter text-2xl md:text-3xl text-warmGray-800 dark:text-cream mb-8 tracking-wide">
           Sign In
-        </h1>
-        <SignInButton />
+      </h1>
+      <SignInButton />
       </div>
     </div>
   );

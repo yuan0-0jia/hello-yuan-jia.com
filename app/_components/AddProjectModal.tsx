@@ -22,7 +22,7 @@ export default function AddProjectModal() {
       {/* Add Project Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-stone-200 dark:bg-zinc-800 rounded-lg px-6 py-2 font-semibold hover:bg-stone-300 dark:hover:bg-zinc-700 transition-colors"
+        className="font-typewriter text-sm uppercase tracking-wider border-2 border-sepia-600 dark:border-sepia-300 text-sepia-600 dark:text-sepia-300 px-4 py-2 rounded-sm hover:bg-sepia-100 dark:hover:bg-sepia-800 transition-colors"
       >
         Add Project
       </button>
@@ -30,23 +30,26 @@ export default function AddProjectModal() {
       {/* Modal Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-warmGray-900/60 dark:bg-black/70 z-40 flex items-center justify-center p-4"
           onClick={() => setIsOpen(false)}
         >
           {/* Modal Content */}
           <div
-            className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-cream dark:bg-warmGray-900 vintage-border rounded-sm shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-8">
               {/* Modal Header */}
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-semibold text-stone-900 dark:text-stone-100">
-                  Add New Project
-                </h2>
+                <div>
+                  <h2 className="font-typewriter text-2xl text-warmGray-800 dark:text-cream tracking-wide">
+                    Add New Project
+                  </h2>
+                  <div className="mt-2 h-px w-24 bg-sepia-300 dark:bg-sepia-700" />
+                </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-stone-500 hover:text-stone-700 dark:text-stone-400 dark:hover:text-stone-200 text-2xl leading-none"
+                  className="text-sepia-500 hover:text-sepia-700 dark:text-sepia-400 dark:hover:text-sepia-200 text-2xl leading-none transition-colors"
                   aria-label="Close modal"
                 >
                   ×
@@ -60,7 +63,7 @@ export default function AddProjectModal() {
                     <div>
                       <label
                         htmlFor="project"
-                        className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                        className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                       >
                         Project Title *
                       </label>
@@ -69,7 +72,7 @@ export default function AddProjectModal() {
                         id="project"
                         name="project"
                         required
-                        className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                        className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-parchment dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                         placeholder="Enter project title"
                       />
                     </div>
@@ -77,7 +80,7 @@ export default function AddProjectModal() {
                     <div>
                       <label
                         htmlFor="desc"
-                        className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                        className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                       >
                         Description *
                       </label>
@@ -86,7 +89,7 @@ export default function AddProjectModal() {
                         name="desc"
                         required
                         rows={4}
-                        className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                        className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-parchment dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                         placeholder="Describe your project"
                       />
                     </div>
@@ -94,27 +97,27 @@ export default function AddProjectModal() {
                     <div>
                       <label
                         htmlFor="to"
-                        className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                        className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                       >
-                        Project Link *
+                        Button Link *
                       </label>
                       <input
                         type="text"
                         id="to"
                         name="to"
                         required
-                        className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                        className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-parchment dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                         placeholder="https://example.com or /internal-path"
                       />
-                      <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-                        External URL (https://...) or internal path (/...)
+                      <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 mt-1 tracking-wider">
+                        Where the button redirects to
                       </p>
                     </div>
 
                     <div>
                       <label
                         htmlFor="button"
-                        className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                        className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                       >
                         Button Text *
                       </label>
@@ -123,7 +126,7 @@ export default function AddProjectModal() {
                         id="button"
                         name="button"
                         required
-                        className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                        className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-parchment dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                         placeholder="e.g., View Project"
                       />
                     </div>
@@ -132,30 +135,55 @@ export default function AddProjectModal() {
                   <div className="space-y-4">
                     <div>
                       <label
-                        htmlFor="image"
-                        className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                        htmlFor="preview_url"
+                        className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                       >
-                        Project Image
+                        Screenshot URL
+                      </label>
+                      <input
+                        type="text"
+                        id="preview_url"
+                        name="preview_url"
+                        className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-parchment dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
+                        placeholder="https://example.com"
+                      />
+                      <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 mt-1 tracking-wider">
+                        Auto-generates a screenshot from this URL (if no image uploaded)
+                      </p>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="image"
+                        className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
+                      >
+                        Upload Thumbnail
                       </label>
                       <input
                         type="file"
                         id="image"
                         name="image"
                         accept="image/*"
-                        className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-stone-900 dark:file:text-stone-100 file:text-sm file:font-medium placeholder:text-stone-400 dark:placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500"
+                        className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-parchment dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors file:border-0 file:bg-sepia-100 dark:file:bg-sepia-800 file:text-sepia-700 dark:file:text-sepia-200 file:text-sm file:font-typewriter file:mr-3 file:px-2 file:py-1 file:rounded-sm placeholder:text-warmGray-400 dark:placeholder:text-warmGray-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500"
                       />
-                      <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-                        Optional: Upload a project thumbnail image
+                      <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 mt-1 tracking-wider">
+                        Upload an image (overrides screenshot URL)
+                      </p>
+                    </div>
+
+                    <div className="mt-4 p-4 bg-sepia-50 dark:bg-warmGray-800/50 rounded-sm border border-sepia-200 dark:border-sepia-700">
+                      <p className="font-typewriter text-xs text-sepia-600 dark:text-sepia-400 tracking-wider">
+                        <span className="font-bold">Note:</span> If you upload a thumbnail, it will be used. Otherwise, a screenshot will be generated from the Screenshot URL.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4">
+                <div className="flex justify-end gap-3 pt-4 border-t border-sepia-200 dark:border-sepia-700">
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="px-4 py-2 text-sm font-medium text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
+                    className="font-typewriter text-sm uppercase tracking-wider px-4 py-2 text-warmGray-600 dark:text-warmGray-300 hover:bg-sepia-100 dark:hover:bg-warmGray-800 rounded-sm transition-colors"
                   >
                     Cancel
                   </button>

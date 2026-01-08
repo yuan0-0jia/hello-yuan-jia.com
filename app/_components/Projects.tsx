@@ -12,6 +12,7 @@ export default async function Projects() {
         header={project.project}
         desc={project.desc}
         image={project.thumbnail}
+        previewUrl={project.preview_url} // New field for screenshot URL
         reverse={project.id % 2 === 0}
         to={project.to}
         button={project.button}

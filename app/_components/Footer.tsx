@@ -9,25 +9,25 @@ export function Footer() {
         {/* Contact section */}
         <div className="py-8">
           <p className="font-typewriter text-sm tracking-wider text-warmGray-600 dark:text-warmGray-300 mb-6">
-            Feel free to reach out to me.
-          </p>
+              Feel free to reach out to me.
+            </p>
           <ul className="flex flex-row justify-center items-center gap-4">
-            <li>
-              <Icon to={"https://www.linkedin.com/in/yuanjia1/"}>
-                <FaLinkedin />
-              </Icon>
-            </li>
-            <li>
-              <Icon to={"https://github.com/yuan0-0jia"}>
-                <FaGithub />
-              </Icon>
-            </li>
-            <li>
-              <Icon to={"mailto:hello.yuanjia@gmail.com"}>
-                <FaEnvelope />
-              </Icon>
-            </li>
-          </ul>
+              <li>
+                <Icon to={"https://www.linkedin.com/in/yuanjia1/"}>
+                  <FaLinkedin />
+                </Icon>
+              </li>
+              <li>
+                <Icon to={"https://github.com/yuan0-0jia"}>
+                  <FaGithub />
+                </Icon>
+              </li>
+              <li>
+                <Icon to={"mailto:hello.yuanjia@gmail.com"}>
+                  <FaEnvelope />
+                </Icon>
+              </li>
+            </ul>
         </div>
 
         {/* Copyright section */}
@@ -45,7 +45,7 @@ export function Footer() {
             Privacy
           </Link>
         </div>
-      </div>
+    </div>
     </footer>
   );
 }

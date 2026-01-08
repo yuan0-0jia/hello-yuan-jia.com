@@ -82,7 +82,7 @@ async function ProjectsList() {
                     htmlFor={`to-${project.id}`}
                     className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                   >
-                    Project Link
+                    Button Link
                   </label>
                   <input
                     type="text"
@@ -93,7 +93,7 @@ async function ProjectsList() {
                     placeholder="https://example.com or /internal-path"
                   />
                   <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 mt-1 tracking-wider">
-                    External URL (https://...) or internal path (/...)
+                    Where the button redirects to
                   </p>
                 </div>
 
@@ -115,6 +115,26 @@ async function ProjectsList() {
               </div>
 
               <div className="space-y-4">
+                <div>
+                  <label
+                    htmlFor={`preview_url-${project.id}`}
+                    className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
+                  >
+                    Screenshot URL
+                  </label>
+                  <input
+                    type="text"
+                    id={`preview_url-${project.id}`}
+                    name="preview_url"
+                    defaultValue={project.preview_url || ""}
+                    className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-cream dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
+                    placeholder="https://example.com"
+                  />
+                  <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 mt-1 tracking-wider">
+                    Auto-generates screenshot (if no thumbnail uploaded)
+                  </p>
+                </div>
+
                 <ProjectImageInput
                   currentThumbnail={project.thumbnail}
                   projectName={project.project}

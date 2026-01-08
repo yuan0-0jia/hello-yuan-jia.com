@@ -1,11 +1,23 @@
-import Image from "next/image";
 import Button from "./Button";
+
+// Generate Microlink screenshot URL for external websites
+function getMicrolinkScreenshot(url: string) {
+  return `https://api.microlink.io/?url=${encodeURIComponent(
+    url
+  )}&screenshot=true&meta=false&embed=screenshot.url`;
+}
+
+// Check if URL is external (starts with http/https)
+function isExternalUrl(url: string) {
+  return url.startsWith("http://") || url.startsWith("https://");
+}
 
 export default function Project({
   header,
   desc,
   to,
   image,
+  previewUrl,
   reverse,
   button,
 }: {
@@ -13,14 +25,28 @@ export default function Project({
   desc: string;
   to: string;
   image: string;
+  previewUrl?: string; // Separate URL for screenshot
   reverse: boolean;
   button: string;
 }) {
+  // Determine the image source:
+  // 1. Use uploaded thumbnail if available
+  // 2. Use Microlink screenshot if previewUrl is provided and external
+  // 3. Show placeholder if neither
+  const hasUploadedImage = image && image.length > 0;
+  const canUseMicrolink =
+    !hasUploadedImage && !!previewUrl && isExternalUrl(previewUrl);
+  const imageSrc = hasUploadedImage
+    ? image
+    : canUseMicrolink
+    ? getMicrolinkScreenshot(previewUrl)
+    : null;
+
   return (
     <section
       className={`flex flex-col ${
         reverse ? "md:flex-row-reverse" : "md:flex-row"
-      } mx-4 md:mx-12 lg:mx-20 my-8 md:my-12 justify-center items-center gap-6 md:gap-10 lg:gap-14 max-w-6xl lg:mx-auto card-hover p-6 md:p-8 bg-cream/50 dark:bg-warmGray-800/30 vintage-border rounded-sm`}
+      } my-8 md:my-12 justify-center items-center gap-6 md:gap-10 lg:gap-14 max-w-6xl mx-auto px-4 md:px-12 card-hover p-6 md:p-8 bg-cream/50 dark:bg-warmGray-800/30 vintage-border rounded-sm`}
     >
       {/* Content */}
       <div className="max-w-md text-center md:text-left">
@@ -38,24 +64,19 @@ export default function Project({
         </Button>
       </div>
 
-      {/* Image with vintage styling */}
-      <div className="relative w-full md:w-96 h-56 md:h-64 img-vintage rounded-sm overflow-hidden vintage-border">
-        {image ? (
-          <Image
-            alt={header}
-            fill
-            sizes="(max-width: 768px) 100vw, 384px"
-            className="object-cover"
-            src={image}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-parchment dark:bg-warmGray-800">
-            <span className="font-typewriter text-warmGray-400 dark:text-warmGray-500">
-              No image available
-            </span>
-          </div>
-        )}
-      </div>
+      {/* Image with vintage styling - natural size, no cropping */}
+      {imageSrc ? (
+        <div className="w-full md:w-auto md:max-w-[500px] img-vintage rounded-sm overflow-hidden vintage-border">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img alt={header} src={imageSrc} className="w-full h-auto" />
+        </div>
+      ) : (
+        <div className="w-full md:w-96 h-56 md:h-64 flex items-center justify-center bg-parchment dark:bg-warmGray-800 rounded-sm vintage-border">
+          <span className="font-typewriter text-warmGray-400 dark:text-warmGray-500">
+            No image available
+          </span>
+        </div>
+      )}
     </section>
   );
 }

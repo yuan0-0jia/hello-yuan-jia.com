@@ -103,6 +103,7 @@ export async function updateProject(formData: FormData) {
   const image = formData.get("image") as File | null;
   const to = formData.get("to") as string;
   const button = formData.get("button") as string;
+  const preview_url = formData.get("preview_url") as string | null;
 
   if (!id || !project || !desc || !to || !button) {
     throw new Error("Required fields are missing");
@@ -140,11 +141,13 @@ export async function updateProject(formData: FormData) {
     to: string;
     button: string;
     thumbnail?: string;
+    preview_url?: string | null;
   } = {
     project,
     desc,
     to,
     button,
+    preview_url: preview_url || null,
   };
 
   // Only include thumbnail in update if a new image was provided
@@ -176,6 +179,7 @@ export async function createProject(formData: FormData) {
   const image = formData.get("image") as File | null;
   const to = formData.get("to") as string;
   const button = formData.get("button") as string;
+  const preview_url = formData.get("preview_url") as string | null;
 
   if (!project || !desc || !to || !button) {
     throw new Error("Required fields are missing");
@@ -213,12 +217,14 @@ export async function createProject(formData: FormData) {
     to: string;
     button: string;
     thumbnail: string | null;
+    preview_url: string | null;
   } = {
     project,
     desc,
     to,
     button,
     thumbnail: imagePath,
+    preview_url: preview_url || null,
   };
 
   const { error: insertError } = await supabase

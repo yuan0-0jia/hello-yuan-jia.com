@@ -41,7 +41,7 @@ function SideNavigation() {
                 pathname === link.href
                   ? "bg-sepia-100 dark:bg-sepia-900/50 text-sepia-700 dark:text-sepia-300 border-l-2 border-sepia-500"
                   : ""
-              }`}
+                }`}
               href={link.href}
             >
               {link.icon}

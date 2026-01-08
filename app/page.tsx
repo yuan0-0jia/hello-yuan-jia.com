@@ -34,10 +34,10 @@ export default async function Home() {
           {/* Hero text content */}
           <div className="text-center md:text-left">
             <h1 className="font-typewriter text-3xl md:text-4xl lg:text-5xl text-warmGray-800 dark:text-cream mb-4 animate-fade-in-up opacity-0 stagger-1">
-              Hi, I&apos;m Yuan
+                Hi, I&apos;m Yuan
             </h1>
             <p className="font-typewriter text-base md:text-lg text-sepia-500 dark:text-sepia-400 mb-8 animate-fade-in-up opacity-0 stagger-2 tracking-wider">
-              Thank you for visiting my site!
+                  Thank you for visiting my site!
             </p>
             <div className="animate-fade-in-up opacity-0 stagger-3">
               <Button type="primary" to="/about">

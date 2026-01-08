@@ -15,6 +15,7 @@ interface ProjectImageItemProps {
     to: string;
     button: string;
     thumbnail: string | null;
+    preview_url?: string | null;
   };
 }
 
@@ -44,6 +45,7 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
       formData.append("button", project.button);
       formData.append("image", file);
       formData.append("currentImage", project.thumbnail || "");
+      formData.append("preview_url", project.preview_url || "");
 
       console.log("Calling updateProject...");
       await updateProject(formData);
@@ -63,12 +65,9 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
     }
   };
 
-  // Fallback placeholder image if thumbnail is missing
-  const imageSrc = project.thumbnail || "/placeholder-project.png";
-
   return (
     <div
-      className="relative w-full overflow-hidden rounded-md bg-stone-200 dark:bg-zinc-800 p-2 group"
+      className="relative w-full overflow-hidden rounded-sm bg-parchment dark:bg-warmGray-800 p-2 group vintage-border"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -78,11 +77,11 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
           src={project.thumbnail}
           width={400}
           height={300}
-          className="w-full h-auto max-h-48 object-contain rounded-md"
+          className="w-full h-auto max-h-48 object-contain rounded-sm"
         />
       ) : (
-        <div className="w-full h-48 flex items-center justify-center bg-stone-300 dark:bg-zinc-700 rounded-md">
-          <span className="text-stone-500 dark:text-stone-400 text-sm">
+        <div className="w-full h-48 flex items-center justify-center bg-sepia-100 dark:bg-warmGray-700 rounded-sm">
+          <span className="font-typewriter text-sepia-500 dark:text-sepia-400 text-sm tracking-wide">
             No image
           </span>
         </div>
@@ -90,18 +89,18 @@ export default function ProjectImageItem({ project }: ProjectImageItemProps) {
 
       {/* Hover Overlay */}
       {(isHovered || isUploading) && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity rounded-md">
+        <div className="absolute inset-0 bg-warmGray-900/60 flex items-center justify-center transition-opacity rounded-sm">
           {isUploading ? (
-            <div className="text-white">
+            <div className="text-cream">
               <SpinnerMini />
             </div>
           ) : (
             <label
               htmlFor={`project-image-${project.id}`}
-              className="cursor-pointer flex flex-col items-center gap-2 text-white hover:text-stone-200 transition-colors"
+              className="cursor-pointer flex flex-col items-center gap-2 text-cream hover:text-sepia-200 transition-colors"
             >
               <FaUpload className="w-6 h-6" />
-              <span className="text-xs font-medium">
+              <span className="font-typewriter text-xs tracking-wide">
                 {project.thumbnail ? "Update Image" : "Upload Image"}
               </span>
               <input
