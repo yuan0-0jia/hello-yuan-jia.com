@@ -18,7 +18,7 @@ async function ProjectsList() {
   if (!projects || projects.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-stone-500 dark:text-stone-300">
+        <p className="font-typewriter text-sepia-500 dark:text-sepia-400 tracking-wider">
           No projects found. Add your first project to get started.
         </p>
       </div>
@@ -30,7 +30,7 @@ async function ProjectsList() {
       {projects.map((project) => (
         <div
           key={project.id}
-          className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8 relative"
+          className="bg-parchment dark:bg-warmGray-800/50 vintage-border rounded-sm p-8 relative"
         >
           <DeleteProjectButton projectId={project.id} />
           <form action={updateProject} className="space-y-6">
@@ -46,7 +46,7 @@ async function ProjectsList() {
                 <div>
                   <label
                     htmlFor={`project-${project.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                    className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                   >
                     Project Title
                   </label>
@@ -56,14 +56,14 @@ async function ProjectsList() {
                     name="project"
                     defaultValue={project.project}
                     required
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                    className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-cream dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor={`desc-${project.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                    className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                   >
                     Description
                   </label>
@@ -73,14 +73,14 @@ async function ProjectsList() {
                     defaultValue={project.desc}
                     required
                     rows={4}
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                    className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-cream dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor={`to-${project.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                    className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                   >
                     Project Link
                   </label>
@@ -89,10 +89,10 @@ async function ProjectsList() {
                     id={`to-${project.id}`}
                     name="to"
                     defaultValue={project.to}
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                    className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-cream dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                     placeholder="https://example.com or /internal-path"
                   />
-                  <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
+                  <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 mt-1 tracking-wider">
                     External URL (https://...) or internal path (/...)
                   </p>
                 </div>
@@ -100,7 +100,7 @@ async function ProjectsList() {
                 <div>
                   <label
                     htmlFor={`button-${project.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                    className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                   >
                     Button Text
                   </label>
@@ -109,7 +109,7 @@ async function ProjectsList() {
                     id={`button-${project.id}`}
                     name="button"
                     defaultValue={project.button}
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                    className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-cream dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                   />
                 </div>
               </div>
@@ -145,8 +145,13 @@ export default async function Page() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div className="text-center flex-1">
-            <h1 className="text-3xl font-semibold mb-2">Projects Management</h1>
-            <p className="text-stone-500 dark:text-stone-300">
+            <div className="vintage-divider mb-6">
+              <span className="text-sepia-400 dark:text-sepia-500">✦</span>
+            </div>
+            <h1 className="font-typewriter text-2xl md:text-3xl text-warmGray-800 dark:text-cream tracking-wide mb-2">
+              Projects Management
+            </h1>
+            <p className="font-typewriter text-sm text-sepia-500 dark:text-sepia-400 tracking-wider">
               Manage your portfolio projects
             </p>
           </div>

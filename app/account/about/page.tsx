@@ -18,7 +18,7 @@ async function AboutForm() {
   if (!about || about.length === 0) {
     return (
       <div className="text-center py-6">
-        <p className="text-stone-500 dark:text-stone-300">
+        <p className="font-typewriter text-sepia-500 dark:text-sepia-400 tracking-wider">
           No about section found. Add your first about section to get started.
         </p>
       </div>
@@ -34,12 +34,14 @@ async function AboutForm() {
     <div className="grid gap-8">
       {/* Header Section */}
       {header && (
-        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8">
-          <h2 className="text-lg font-medium text-center">Header Section</h2>
+        <div className="bg-parchment dark:bg-warmGray-800/50 vintage-border rounded-sm p-8">
+          <h2 className="font-typewriter text-lg text-warmGray-800 dark:text-cream tracking-wide text-center mb-4">
+            Header Section
+          </h2>
           <div className="flex justify-center">
             <div className="space-y-2 w-full max-w-sm">
               <AboutImageItem section={header} noBackground />
-              <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+              <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 text-center tracking-wider">
                 Hover over image to update
               </p>
             </div>
@@ -51,14 +53,16 @@ async function AboutForm() {
       {sections.map((section) => (
         <div
           key={section.id}
-          className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8"
+          className="bg-parchment dark:bg-warmGray-800/50 vintage-border rounded-sm p-8"
         >
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <DeleteParagraphButton paragraphId={section.id.toString()} />
-              <h2 className="text-lg font-medium">Paragraph {section.id}</h2>
+              <h2 className="font-typewriter text-lg text-warmGray-800 dark:text-cream tracking-wide">
+                Paragraph {section.id}
+              </h2>
             </div>
-            <span className="text-xs text-stone-400 dark:text-stone-500 bg-stone-200 dark:bg-zinc-800 px-2 py-1 rounded">
+            <span className="font-typewriter text-xs text-sepia-400 dark:text-sepia-500 bg-sepia-100 dark:bg-sepia-900/50 px-2 py-1 border border-sepia-200 dark:border-sepia-700">
               ID: {section.id}
             </span>
           </div>
@@ -76,7 +80,7 @@ async function AboutForm() {
                 <div>
                   <label
                     htmlFor={`desc-${section.id}`}
-                    className="block text-sm font-medium text-stone-700 dark:text-stone-200 mb-1"
+                    className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 mb-1 tracking-wide"
                   >
                     Paragraph Content
                   </label>
@@ -86,18 +90,18 @@ async function AboutForm() {
                     defaultValue={section.desc}
                     required
                     rows={8}
-                    className="w-full rounded-md border border-stone-200 dark:border-stone-700 bg-white dark:bg-zinc-900 px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-400 dark:focus-visible:ring-stone-500 text-stone-900 dark:text-stone-100"
+                    className="w-full rounded-sm border border-sepia-200 dark:border-sepia-700 bg-cream dark:bg-warmGray-800 px-3 py-2 font-typewriter text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-sepia-500 text-warmGray-800 dark:text-warmGray-100 tracking-wide"
                   />
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-stone-700 dark:text-stone-200">
+                  <label className="block font-typewriter text-sm text-warmGray-700 dark:text-warmGray-200 tracking-wide">
                     Paragraph Image
                   </label>
                   <AboutImageItem section={section} />
-                  <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+                  <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 text-center tracking-wider">
                     Hover over image to update
                   </p>
                 </div>
@@ -126,10 +130,13 @@ export default async function Page() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div className="text-center flex-1">
-            <h1 className="text-3xl font-semibold mb-2">
+            <div className="vintage-divider mb-6">
+              <span className="text-sepia-400 dark:text-sepia-500">✦</span>
+            </div>
+            <h1 className="font-typewriter text-2xl md:text-3xl text-warmGray-800 dark:text-cream tracking-wide mb-2">
               About Section Management
             </h1>
-            <p className="text-stone-500 dark:text-stone-300">
+            <p className="font-typewriter text-sm text-sepia-500 dark:text-sepia-400 tracking-wider">
               Manage your about section content
             </p>
           </div>

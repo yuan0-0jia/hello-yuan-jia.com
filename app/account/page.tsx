@@ -18,27 +18,32 @@ export default async function Page() {
   const avatarData = avatar?.find((photo) => photo.id === 1);
 
   if (!avatarData) {
-    return <div>Avatar not found</div>;
+    return <div className="font-typewriter text-warmGray-600 dark:text-warmGray-300">Avatar not found</div>;
   }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-2">Account Settings</h1>
-          <p className="text-stone-500 dark:text-stone-300">
+          <div className="vintage-divider mb-6">
+            <span className="text-sepia-400 dark:text-sepia-500">✦</span>
+          </div>
+          <h1 className="font-typewriter text-2xl md:text-3xl text-warmGray-800 dark:text-cream tracking-wide mb-2">
+            Account Settings
+          </h1>
+          <p className="font-typewriter text-sm text-sepia-500 dark:text-sepia-400 tracking-wider">
             Welcome back, {data?.user?.user_metadata?.name}
           </p>
         </div>
 
-        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-6">
+        <div className="bg-parchment dark:bg-warmGray-800/50 vintage-border rounded-sm p-6">
           <div className="max-w-md mx-auto">
-            <h2 className="text-lg font-medium mb-4 text-center">
+            <h2 className="font-typewriter text-lg text-warmGray-800 dark:text-cream tracking-wide mb-4 text-center">
               Profile Photo
             </h2>
             <div className="flex flex-col items-center gap-4">
               <AvatarImageItem avatar={avatarData} />
-              <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+              <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 text-center tracking-wider">
                 Hover over the image to update
               </p>
             </div>

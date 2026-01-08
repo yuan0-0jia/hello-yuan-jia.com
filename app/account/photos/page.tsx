@@ -15,7 +15,7 @@ async function PhotosList() {
   if (!photos || photos.length === 0) {
     return (
       <div className="text-center py-6">
-        <p className="text-stone-500 dark:text-stone-300">
+        <p className="font-typewriter text-sepia-500 dark:text-sepia-400 tracking-wider">
           No photos found. Add your first photo to get started.
         </p>
       </div>
@@ -32,14 +32,16 @@ async function PhotosList() {
     <div className="space-y-6">
       {/* Header Photo Section */}
       {headerPhoto && (
-        <div className="bg-[#f7f7f7] dark:bg-zinc-900 rounded-lg shadow-sm p-8">
-          <h2 className="text-lg font-medium mb-4 text-center">Header Photo</h2>
+        <div className="bg-parchment dark:bg-warmGray-800/50 vintage-border rounded-sm p-8">
+          <h2 className="font-typewriter text-lg text-warmGray-800 dark:text-cream tracking-wide mb-4 text-center">
+            Header Photo
+          </h2>
           <div className="flex justify-center">
             <div className="w-full max-w-sm">
               <PhotoGridItem photo={headerPhoto} />
             </div>
           </div>
-          <p className="text-xs text-stone-500 dark:text-stone-400 text-center mt-4">
+          <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 text-center mt-4 tracking-wider">
             Hover over the image to update
           </p>
         </div>
@@ -47,13 +49,15 @@ async function PhotosList() {
 
       {/* Photo Grid */}
       <div className="space-y-4">
-        <h2 className="text-lg font-medium text-center">Gallery Photos</h2>
+        <h2 className="font-typewriter text-lg text-warmGray-800 dark:text-cream tracking-wide text-center">
+          Gallery Photos
+        </h2>
         <div className="grid grid-cols-3 gap-8">
           {otherPhotos.map((photo) => (
             <PhotoGridItem key={photo.id} photo={photo} />
           ))}
         </div>
-        <p className="text-xs text-stone-500 dark:text-stone-400 text-center">
+        <p className="font-typewriter text-xs text-sepia-500 dark:text-sepia-400 text-center tracking-wider">
           Hover over any image to update
         </p>
       </div>
@@ -72,8 +76,13 @@ export default async function Page() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold mb-2">Photos Management</h1>
-          <p className="text-stone-500 dark:text-stone-300">
+          <div className="vintage-divider mb-6">
+            <span className="text-sepia-400 dark:text-sepia-500">✦</span>
+          </div>
+          <h1 className="font-typewriter text-2xl md:text-3xl text-warmGray-800 dark:text-cream tracking-wide mb-2">
+            Photos Management
+          </h1>
+          <p className="font-typewriter text-sm text-sepia-500 dark:text-sepia-400 tracking-wider">
             Hover over any photo to update it
           </p>
         </div>

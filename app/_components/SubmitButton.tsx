@@ -16,8 +16,7 @@ export default function SubmitButton({
   return (
     <button
       form={form}
-      className="bg-stone-200 dark:bg-zinc-800 rounded-lg px-6 py-2 font-semibold hover:bg-stone-300 dark:hover:bg-zinc-700  disabled:cursor-not-allowed disabled:bg-stone-400
-      dark:disabled:bg-zinc-500 "
+      className="font-typewriter text-sm tracking-wider bg-sepia-600 text-cream px-6 py-2 border border-sepia-700 hover:bg-sepia-700 transition-colors disabled:cursor-not-allowed disabled:bg-sepia-400 disabled:border-sepia-400"
       disabled={pending}
     >
       {pending ? pendingLabel : children}

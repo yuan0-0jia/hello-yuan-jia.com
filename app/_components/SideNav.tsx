@@ -19,7 +19,7 @@ const navLinks = [
   {
     name: "Photos",
     href: "/account/photos",
-    icon: <FaPhotoFilm className="h-5 w-5 " />,
+    icon: <FaPhotoFilm className="h-5 w-5" />,
   },
   {
     name: "About",
@@ -32,15 +32,16 @@ function SideNavigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="border-r border-slate-300">
-      <ul className="flex flex-col gap-1 h-full text-base">
+    <nav className="border-r border-sepia-200 dark:border-sepia-800">
+      <ul className="flex flex-col gap-1 h-full font-typewriter text-sm tracking-wide">
         {navLinks.map((link) => (
           <li key={link.name}>
             <Link
-              className={`mx-2 rounded-lg py-2 px-4 hover:bg-stone-200
-                dark:hover:bg-zinc-800 flex items-center gap-3 font-normal ${
-                  pathname === link.href ? "bg-stone-100 dark:bg-zinc-900" : ""
-                }`}
+              className={`mx-2 rounded-sm py-3 px-4 hover:bg-sepia-100 dark:hover:bg-sepia-900/30 flex items-center gap-3 text-warmGray-600 dark:text-warmGray-300 hover:text-sepia-700 dark:hover:text-sepia-300 transition-colors ${
+                pathname === link.href
+                  ? "bg-sepia-100 dark:bg-sepia-900/50 text-sepia-700 dark:text-sepia-300 border-l-2 border-sepia-500"
+                  : ""
+              }`}
               href={link.href}
             >
               {link.icon}
@@ -49,10 +50,7 @@ function SideNavigation() {
           </li>
         ))}
 
-        <li
-          className="mt-auto mx-2 rounded-lg hover:bg-stone-200
-                dark:hover:bg-zinc-800"
-        >
+        <li className="mt-auto mx-2 rounded-sm hover:bg-sepia-100 dark:hover:bg-sepia-900/30 transition-colors">
           <SignOutButton />
         </li>
       </ul>
