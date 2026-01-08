@@ -22,6 +22,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="preconnect"
+          href="https://yltbxotlxxqixuyxsrxm.supabase.co"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://yltbxotlxxqixuyxsrxm.supabase.co"
+        />
+      </head>
       <body
         className={`antialiased flex flex-col relative min-h-screen  bg-white dark:bg-black text-slate-700 dark:text-slate-100 transition-colors`}
       >

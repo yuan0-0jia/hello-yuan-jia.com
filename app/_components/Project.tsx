@@ -39,7 +39,7 @@ export default function Project({
           <Image
             alt={header}
             fill
-            sizes="800x500"
+            sizes="(max-width: 768px) 100vw, 384px"
             className="rounded-xl drop-shadow-2xl object-cover"
             src={image}
           />
